@@ -16,7 +16,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "tailwindbuildlocal": "npx tailwindcss -i tailwind/style.css -c tailwind/tailwind.config.js -o ./src/index.css",
+    "tailwindbuildmini": "npx tailwindcss -i tailwind/style.css -c tailwind/tailwind.config.js -o src/index.css --minify",
+    "tailwindwatch":"npx tailwindcss -i tailwind/style.css -c tailwind/tailwind.config.js -o src/index.css --watch"
   },
   "eslintConfig": {
     "extends": [
