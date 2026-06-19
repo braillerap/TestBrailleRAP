@@ -3,7 +3,7 @@
 @tailwind utilities;
 
   .App {
-    @apply bg-pink-100;
+    @apply bg-blue-100 min-h-dvh;
   }
   .btn {
     @apply font-bold py-2 px-4 mx-1 my-1 rounded-full;
@@ -28,4 +28,7 @@
  }
  .select:disabled {
     @apply bg-gray-700 text-gray-300 border-2 border-gray-700;
+  }
+  .labelelm {
+    @apply font-bold py-2 px-4 mx-1 my-1
   }

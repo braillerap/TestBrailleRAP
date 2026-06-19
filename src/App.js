@@ -13,14 +13,20 @@ function App() {
     setConnected(false);
   }
 
+  const voidfunc = () => {
+
+  }
+
 
   return (
     <div className="App">
 
-      <div className='min-w-80 mx-auto bg-red-500 text-center' >
-        <h1 className="text-3xl font-bold underline text-center">
+      <div className='min-w-80 mx-auto text-center' >
+        <h1 className="text-3xl font-bold">
           TestBrailleRAP 
         </h1>
+        <h2>Version:{`${process.env.REACT_APP_VERSION}`}</h2>
+
       </div>
       <div className='flex'>
         <button class="btn btn-blue"
@@ -29,7 +35,8 @@ function App() {
 
           Connexion
         </button>
-        &nbsp;com port:
+        <p className='labelelm'>&nbsp;com port:</p>
+        
         <select className='select'
         disabled = {connected}>
           <option value="1">COM1</option>
@@ -38,16 +45,25 @@ function App() {
         </select>
         
         <button
-          disabled={!connected}
+          disabled={connected}
           class="btn btn-blue"
-          onClick={setDisconnected}>
-          Deconnexion
+          onClick={voidfunc}>
+          Refresh COM
         </button>
       </div>
       <div className='flex'>
         <button class="btn btn-blue"
+          disabled={! connected}
+          onClick={setDisconnected}>
+
+          Déconnecter
+        </button>
+
+      </div>
+      <div className='flex'>
+        <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           Etat des fin de course
         </button>
@@ -56,19 +72,19 @@ function App() {
       <div className='flex'>
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           Home X
         </button>
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           Home Y
         </button>
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           Home XY
         </button>
@@ -78,7 +94,7 @@ function App() {
         <div class=""></div>
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           Y++
         </button>
@@ -88,7 +104,7 @@ function App() {
         <div class=""></div>
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           Y+
         </button>
@@ -97,33 +113,33 @@ function App() {
 
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           X--
         </button>
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           X-
         </button>
         
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           Embosser 1 point
         </button>
         
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           X+
         </button>
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           X++
         </button>
@@ -133,7 +149,7 @@ function App() {
         <div class=""></div>
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           Y-
         </button>
@@ -143,7 +159,7 @@ function App() {
         <div class=""></div>
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           Y--
         </button>
@@ -153,25 +169,25 @@ function App() {
       <div className='flex'>
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           X+
         </button>
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           Y+
         </button>
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           X-
         </button>
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           Y-
         </button>
@@ -179,7 +195,7 @@ function App() {
       <div className='flex'>
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           Embosser 1 point
         </button>
@@ -189,7 +205,7 @@ function App() {
         <input type="text" className='textedit'></input>
         <button class="btn btn-blue"
           disabled={!connected}
-          onClick={setConnectedState}>
+          onClick={voidfunc}>
 
           Envoyer une commande GCODE
         </button>
