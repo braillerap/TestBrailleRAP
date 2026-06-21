@@ -49,49 +49,45 @@ class App extends Component {
         connected: false,
         webviewready: false,
         params: AppOption,
-        listport:[]
+        listport: []
       }
     );
+    this.handleChangePort = this.handleChangePort.bind(this);
     this.webviewloaded = this.webviewloaded.bind(this);
 
     this.setConnectedState = this.setConnectedState.bind(this);
     this.setDisconnectedState = this.setDisconnectedState.bind(this);
     this.voidfunc = this.voidfunc.bind(this);
     this.handleRefreshPort = this.handleRefreshPort.bind(this);
-    this.backendTest = this.backendTest.bind (this);
+    this.backendTest = this.backendTest.bind(this);
   }
 
   async webviewloaded() {
-    
+
     // save webview state
     this.setState({ webviewready: true });
     window.pywebview.state = {};
-    this.context.GetBackend().setbackendready(true);
-    
+    let Backend = this.context.GetBackend();
+    Backend.setbackendready(true);
+
     // loading app parameters
-    let option = await window.pywebview.api.get_parameters();
+    let option = await Backend.readParameters();
     console.log("webviewloaded pywebview ready :", option);
-
-    let params = JSON.parse(option);
-    
-
-    // save app parameters
-    this.setState({ params: params });
+    if (option) {
+      let params = JSON.parse(option);
+      // save app parameters
+      this.setState({ params: params });
+      this.context.setParams(params);
+      this.context.SetAppLocale(params.lang);
+    }
 
     // update com ports
-    let list = await window.pywebview.api.gcode_get_serial();
-    console.log("gcode_get_serial" + list)
-    let portinfo = JSON.parse(list);
-    this.setState({ listport: portinfo })
-    
-
-    /*
-    this.context.setParams (params);
-    this.context.SetAppLocale (params.lang);
-    this.context.setPyWebViewReady(true);
-    
-   
-    */
+    let list = await Backend.getSerialPorts();
+    if (list) {
+      console.log("gcode_get_serial" + list)
+      let portinfo = JSON.parse(list);
+      this.setState({ listport: portinfo })
+    }
 
   }
 
@@ -99,7 +95,15 @@ class App extends Component {
 
     window.addEventListener('pywebviewready', this.webviewloaded);
 
-    
+
+  }
+
+  handleChangePort(event) {
+    let option = {
+      ...this.context.Params,
+      comport: event.target.value
+    };
+    this.context.SetOption(option);
   }
 
   setConnectedState() {
@@ -110,13 +114,13 @@ class App extends Component {
     this.setState({ connected: false });
   }
 
-  backendTest ()
-  {
-    this.context.GetBackend ().confirm_dialog ("test", "ca marche");
+  backendTest() {
+    this.context.GetBackend().confirm_dialog("test", "ca marche");
   }
   voidfunc() {
 
   }
+
 
   handleRefreshPort() {
     if (this.state.webviewready) {
@@ -152,13 +156,17 @@ class App extends Component {
           <p className='labelelm'>&nbsp;com port:</p>
 
           <select className='select'
+            onChange={this.handleChangePort}
+            value={this.context.Params.comport}
+            id="selectport"
+            name="selectport"
             disabled={this.state.connected}>
-            
+
             {this.state.listport.map((line, index) => {
               //if (line.device === this.context.Params.comport)
               //  return (<option key={line.device} value={line.device}>{line.device} {line.description} </option>);
               //else
-                return (<option key={line.device} value={line.device}>{line.device} {line.description} </option>);
+              return (<option key={line.device} value={line.device}>{line.device} {line.description} </option>);
             })
             }
           </select>
@@ -170,7 +178,7 @@ class App extends Component {
             Refresh COM
           </button>
         </div>
-        
+
         <div className='flex'>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
@@ -181,7 +189,7 @@ class App extends Component {
 
         </div>
         <div>
-          <hr className='min-w-dvw text-red-500 py-2 px-4 mx-1 my-1 bg-blue-200' />
+          <hr className='min-w-dvw text-red-500 py-1 px-1 mx-1 my-2 bg-blue-200' />
         </div>
         <div className='flex'>
           <button className="btn btn-blue"

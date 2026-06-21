@@ -57,7 +57,7 @@ let _backend = new Backend();
 const AppContextWrapper = (props) => {
     
     const [Params, setParams] = useState(params);
-    const [PyWebViewReady, setPyWebViewReady] = useState(pywebviewready);
+    
     const [Locale, setLocale] = useState(locale);
     
 
@@ -76,8 +76,8 @@ const AppContextWrapper = (props) => {
     
     function setOption(opt) {
         setParams(opt);
-        if (window.pywebview)
-            window.pywebview.api.gcode_set_parameters(opt);
+        _backend.writeAppParameters(opt);
+            
 
     }
 
@@ -92,7 +92,7 @@ const AppContextWrapper = (props) => {
         console.log ("getBackend");
         return _backend;
     }
-
+    
     return (
         <AppContext.Provider value={{
             message: "message",
@@ -104,7 +104,6 @@ const AppContextWrapper = (props) => {
             GetLocaleDir: getLocaleDir,
             GetBackend: getBackend,
             Params, setParams,
-            PyWebViewReady, setPyWebViewReady,
             Locale, setLocale,
             
         }} >

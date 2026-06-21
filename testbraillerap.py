@@ -21,7 +21,7 @@ if getattr(sys, "frozen", False):
 # main app user option
 app_options = {
     "comport": "COM1",
-    
+    "lang":"fr",
 }
 
 APP_NAME = "TestBrailleRAP"
