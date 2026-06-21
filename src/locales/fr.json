@@ -1,0 +1,16 @@
+{
+    "app.loading": "Chargement en cours…",
+    "app.wait": "Patientez…",
+    "app.confirquit": "Voulez-vous vraiment quitter l'application ?",
+  
+    "param.locale": "Langue de l'application",
+    "param.labelport": "Port de communication",
+    "param.nocomport": "Aucun port de communication disponible",
+    "param.buttonrefresh": "Actualiser",
+ 
+    "param.comportrefreshed": "Ports de communications actualisés"
+    
+
+    
+    
+}

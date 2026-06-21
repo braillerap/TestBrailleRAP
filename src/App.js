@@ -29,7 +29,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  *
- * This file is part of DesktopBrailleRAP software.
+ * This file is part of TestBrailleRAP software.
  *
  * SPDX-FileCopyrightText: 2025-2026 Stephane GODIN <stephane@braillerap.org>
  * 
@@ -38,15 +38,18 @@
 import { Component } from 'react';
 import logo from './logo.svg';
 import AppOption from "./components/AppOption";
+import AppContext from "./components/AppContext";
 
 class App extends Component {
+  static contextType = AppContext;
   constructor(props) {
     super(props);
     this.state = (
       {
         connected: false,
         webviewready: false,
-        params: AppOption
+        params: AppOption,
+        listport:[]
       }
     );
     this.webviewloaded = this.webviewloaded.bind(this);
@@ -54,6 +57,8 @@ class App extends Component {
     this.setConnectedState = this.setConnectedState.bind(this);
     this.setDisconnectedState = this.setDisconnectedState.bind(this);
     this.voidfunc = this.voidfunc.bind(this);
+    this.handleRefreshPort = this.handleRefreshPort.bind(this);
+    this.backendTest = this.backendTest.bind (this);
   }
 
   async webviewloaded() {
@@ -61,7 +66,7 @@ class App extends Component {
     // save webview state
     this.setState({ webviewready: true });
     window.pywebview.state = {};
-    
+    this.context.GetBackend().setbackendready(true);
     
     // loading app parameters
     let option = await window.pywebview.api.get_parameters();
@@ -72,19 +77,29 @@ class App extends Component {
 
     // save app parameters
     this.setState({ params: params });
+
+    // update com ports
+    let list = await window.pywebview.api.gcode_get_serial();
+    console.log("gcode_get_serial" + list)
+    let portinfo = JSON.parse(list);
+    this.setState({ listport: portinfo })
+    
+
     /*
     this.context.setParams (params);
     this.context.SetAppLocale (params.lang);
     this.context.setPyWebViewReady(true);
     
-    this.context.SetRuntimeOptions (runparams);
+   
     */
 
   }
 
-  componentDidMount() {
+  async componentDidMount() {
 
     window.addEventListener('pywebviewready', this.webviewloaded);
+
+    
   }
 
   setConnectedState() {
@@ -95,8 +110,25 @@ class App extends Component {
     this.setState({ connected: false });
   }
 
+  backendTest ()
+  {
+    this.context.GetBackend ().confirm_dialog ("test", "ca marche");
+  }
   voidfunc() {
 
+  }
+
+  handleRefreshPort() {
+    if (this.state.webviewready) {
+      let msg = "patientez"; //this.context.GetLocaleString("app.wait");
+      this.setState({ comevent: msg })
+      window.pywebview.api.gcode_get_serial().then(list => {
+        let portinfo = JSON.parse(list);
+        let success = "mise a jour ok"; //this.context.GetLocaleString("param.comportrefreshed");
+        this.setState({ listport: portinfo, comevent: success })
+      }
+      );
+    }
   }
 
   render() {
@@ -121,15 +153,20 @@ class App extends Component {
 
           <select className='select'
             disabled={this.state.connected}>
-            <option value="1">COM1</option>
-            <option value="2">COM2</option>
-            <option value="3">COM3</option>
+            
+            {this.state.listport.map((line, index) => {
+              //if (line.device === this.context.Params.comport)
+              //  return (<option key={line.device} value={line.device}>{line.device} {line.description} </option>);
+              //else
+                return (<option key={line.device} value={line.device}>{line.device} {line.description} </option>);
+            })
+            }
           </select>
 
           <button
             disabled={this.state.connected}
             className="btn btn-blue"
-            onClick={this.voidfunc}>
+            onClick={this.handleRefreshPort}>
             Refresh COM
           </button>
         </div>
@@ -281,9 +318,9 @@ class App extends Component {
         <div className='flex'>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+            onClick={this.backendTest}>
 
-            Embosser 1 point
+            Test back end
           </button>
 
         </div>
