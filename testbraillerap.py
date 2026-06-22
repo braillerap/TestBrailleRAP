@@ -8,6 +8,7 @@ import sys
 import serial.tools.list_ports
 import time
 from pathlib import Path
+from gcode import GCodeDevice
 
 rpi = False
 COM_TIMEOUT =   5  #Communication timeout with device controller (Marlin)
@@ -74,6 +75,22 @@ def load_parameters():
 
      
 class Api:
+    def __init__ (self):
+        self.gcode = GCodeDevice.GCodeDevice()
+
+    def openCom (self, port):
+        ret = self.gcode.openCom (port)
+        print (ret)
+        return (ret);
+    def MoveRel (self, x, y):
+        ret = self.gcode.MoveRel(x,y)
+        return (ret)
+    
+    def M119 (self):
+        ret = self.gcode.M119()
+        print (ret)
+        return ret;
+
     def fullscreen(self):
         """toggle main window fullscreen"""
         webview.windows[0].toggle_fullscreen()
@@ -245,6 +262,7 @@ class Api:
         js = json.dumps(data)
 
         return js
+    
 
 def get_entrypoint():
     def exists(path):

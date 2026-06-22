@@ -25,6 +25,20 @@ class BackendPyWebview {
         let list = await window.pywebview.api.gcode_get_serial();
         return list;    
     }
+
+    gcode_open (port)
+    {
+        return window.pywebview.api.openCom (port);
+    }
+    gcode_M119()
+    {
+        return window.pywebview.api.M119 ();
+    }
+
+    gcode_move_rel (x,y)
+    {
+        return window.pywebview.api.MoveRel(x,y);
+    }
 };
 
 class Backend {
@@ -76,6 +90,18 @@ class Backend {
             return ret;
             
         }
+    }
+    gcode_open (port)
+    {
+        return this.backend.gcode_open (port);
+    }
+    gcode_M119 ()
+    {
+        return this.backend.gcode_M119 ();
+    }
+    gcode_move_rel (x,y)
+    {
+        return this.backend.gcode_move_rel(x,y);
     }
 }
 

@@ -59,6 +59,8 @@ class App extends Component {
     this.setDisconnectedState = this.setDisconnectedState.bind(this);
     this.voidfunc = this.voidfunc.bind(this);
     this.handleRefreshPort = this.handleRefreshPort.bind(this);
+    this.handleOpenCom = this.handleOpenCom.bind(this);
+    this.handleLimitStatus = this.handleLimitStatus.bind(this);
     this.backendTest = this.backendTest.bind(this);
   }
 
@@ -121,6 +123,15 @@ class App extends Component {
 
   }
 
+  handleLimitStatus () {
+     let s = this.context.GetBackend().gcode_M119 ();
+     console.log (s);
+  }
+
+  handleOpenCom () {
+    this.context.GetBackend().gcode_open (this.context.Params.comport);
+    this.setState({ connected: true });
+  }
 
   handleRefreshPort() {
     if (this.state.webviewready) {
@@ -133,6 +144,11 @@ class App extends Component {
       }
       );
     }
+  }
+  handleMove (x,y)
+  {
+    let ret = this.context.GetBackend().gcode_move_rel(x,y);
+    console.log (ret);
   }
 
   render() {
@@ -149,7 +165,7 @@ class App extends Component {
         <div className='flex'>
           <button className="btn btn-blue"
             disabled={this.state.connected}
-            onClick={this.setConnectedState}>
+            onClick={this.handleOpenCom}>
 
             Connexion
           </button>
@@ -194,7 +210,7 @@ class App extends Component {
         <div className='flex'>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+            onClick={this.handleLimitStatus}>
 
             Etat des fin de course
           </button>
@@ -225,7 +241,7 @@ class App extends Component {
           <div className=""></div>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+            onClick={()=>{this.handleMove(0,+10)}}>
 
             Y++
           </button>
@@ -235,7 +251,7 @@ class App extends Component {
           <div className=""></div>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+            onClick={()=>{this.handleMove(0,+1)}}>
 
             Y+
           </button>
@@ -244,13 +260,13 @@ class App extends Component {
 
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+            onClick={()=>{this.handleMove(-10,0)}}>
 
             X--
           </button>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+            onClick={()=>{this.handleMove(-1,0)}}>
 
             X-
           </button>
@@ -264,13 +280,13 @@ class App extends Component {
 
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+            onClick={()=>{this.handleMove(1,0)}}>
 
             X+
           </button>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+            onClick={()=>{this.handleMove(10,1)}}>
 
             X++
           </button>
@@ -280,7 +296,7 @@ class App extends Component {
           <div className=""></div>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+            onClick={()=>{this.handleMove(0,-1)}}>
 
             Y-
           </button>
@@ -290,7 +306,7 @@ class App extends Component {
           <div className=""></div>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+            onClick={()=>{this.handleMove(0,-10)}}>
 
             Y--
           </button>
