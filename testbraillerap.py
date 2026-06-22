@@ -193,11 +193,11 @@ class Api:
     def CancelPrint(self):
         global cancel_print
         cancel_print = True
-        print ("Printing cenceled")
+        print ("Printing canceled")
         return
 
 
-    def gcode_set_serial(serial):
+    def gcode_set_serial(self, serial):
         serial_port = serial
 
     def gcode_set_com_port(self, port):
