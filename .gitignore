@@ -25,4 +25,5 @@ package-lock.json
 test_brap__parameters.json
 /venv
 gcode/__pycache__/
-
+gcode/__pycache__/GCodeDevice.cpython-312.pyc
+*.pyc
