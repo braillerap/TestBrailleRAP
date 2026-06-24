@@ -63,12 +63,10 @@ const AppContextWrapper = (props) => {
 
     
     function getLocaleData() {
-        console.log("localedata in context:" + localedata);
-
         return (localedata);
     }
     function setAppLocale(localecode) {
-        console.log("setAppLocale:" + localecode);
+        
         localedata.setLocaleCode(localecode);
         setLocale(localedata.getLocaleCode());
     }
@@ -89,7 +87,7 @@ const AppContextWrapper = (props) => {
         return localedata.getLocaleDir();
     }
     function getBackend () {
-        console.log ("getBackend");
+        
         return _backend;
     }
     

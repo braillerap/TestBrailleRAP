@@ -35,6 +35,10 @@ class BackendPyWebview {
         return await window.pywebview.api.M119 ();
     }
 
+    async gcode_M3 (s)
+    {
+        return await window.pywebview.api.M3 (s);
+    }
     async gcode_move_rel (x,y)
     {
         return await window.pywebview.api.MoveRel(x,y);
@@ -99,6 +103,12 @@ class Backend {
     {
         return await this.backend.gcode_M119 ();
     }
+
+    async gcode_M3 (s)
+    {
+        return await this.backend.gcode_M3(s);
+    }
+
     async gcode_move_rel (x,y)
     {
         return await this.backend.gcode_move_rel(x,y);
