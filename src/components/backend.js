@@ -26,18 +26,18 @@ class BackendPyWebview {
         return list;    
     }
 
-    gcode_open (port)
+    async gcode_open (port)
     {
-        return window.pywebview.api.openCom (port);
+        return await window.pywebview.api.openCom (port);
     }
-    gcode_M119()
+    async gcode_M119()
     {
-        return window.pywebview.api.M119 ();
+        return await window.pywebview.api.M119 ();
     }
 
-    gcode_move_rel (x,y)
+    async gcode_move_rel (x,y)
     {
-        return window.pywebview.api.MoveRel(x,y);
+        return await window.pywebview.api.MoveRel(x,y);
     }
 };
 
@@ -91,17 +91,17 @@ class Backend {
             
         }
     }
-    gcode_open (port)
+    async gcode_open (port)
     {
-        return this.backend.gcode_open (port);
+        return await this.backend.gcode_open (port);
     }
-    gcode_M119 ()
+    async gcode_M119 ()
     {
-        return this.backend.gcode_M119 ();
+        return await this.backend.gcode_M119 ();
     }
-    gcode_move_rel (x,y)
+    async gcode_move_rel (x,y)
     {
-        return this.backend.gcode_move_rel(x,y);
+        return await this.backend.gcode_move_rel(x,y);
     }
 }
 

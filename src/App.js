@@ -123,8 +123,8 @@ class App extends Component {
 
   }
 
-  handleLimitStatus () {
-     let s = this.context.GetBackend().gcode_M119 ();
+  async handleLimitStatus () {
+     let s = await this.context.GetBackend().gcode_M119 ();
      console.log (s);
   }
 
@@ -145,9 +145,9 @@ class App extends Component {
       );
     }
   }
-  handleMove (x,y)
+  async handleMove (x,y)
   {
-    let ret = this.context.GetBackend().gcode_move_rel(x,y);
+    let ret = await this.context.GetBackend().gcode_move_rel(x,y);
     console.log (ret);
   }
 
