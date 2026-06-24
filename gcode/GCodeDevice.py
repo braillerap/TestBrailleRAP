@@ -26,7 +26,7 @@ class GCodeDevice :
             print ("hw: ", gcode_line, gcode_line.decode('utf-8'))
 
             gcode_out = gcode_out + gcode_line.decode('utf-8')
-            print ("machin")
+           
             print ("out:", gcode_out)
             print(gcode_out.strip())
             if "ok" in gcode_out:
@@ -39,8 +39,13 @@ class GCodeDevice :
                 raise Exception("Timeout in printer communication")
         return gcode_out
     
-    def G1 (self, x, y, speed = 3000, acc = 300):
-        str = "G1 X{0} Y{0}"
+    #def G1 (self, x, y, speed = 3000, acc = 300):
+    #    str = "G1 X{0} Y{0}"
+    def M3 (self, s):
+        str = "M3 S{0}\r\n".format (s)
+        self.hwport.write (str.encode())
+        str = self.read ()
+        return str
 
     def MoveRel (self, x, y):
         str = "G91\r\n"
@@ -56,8 +61,9 @@ class GCodeDevice :
         try:
             print ("M119")
             self.hwport.write(str.encode("\r\n\r\n"))   #cleanup
+            self.hwport.flushInput()  # Flush startup text in serial input
             self.hwport.write (str.encode("M119\r\n"))
-            time.sleep(0.5)
+            #time.sleep(0.5)
             ret = self.read()
             ll = ret.splitlines()
             print ('M119', ll, ret);

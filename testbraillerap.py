@@ -91,6 +91,11 @@ class Api:
         print (ret)
         return ret;
 
+    def M3 (self, s):
+        ret = self.gcode.M3 (s)
+        print (ret)
+        return ret;
+
     def fullscreen(self):
         """toggle main window fullscreen"""
         webview.windows[0].toggle_fullscreen()

@@ -49,7 +49,9 @@ class App extends Component {
         connected: false,
         webviewready: false,
         params: AppOption,
-        listport: []
+        listport: [],
+        limitx: 0,
+        limity: 0,
       }
     );
     this.handleChangePort = this.handleChangePort.bind(this);
@@ -62,6 +64,7 @@ class App extends Component {
     this.handleOpenCom = this.handleOpenCom.bind(this);
     this.handleLimitStatus = this.handleLimitStatus.bind(this);
     this.backendTest = this.backendTest.bind(this);
+    this.handleEmboss = this.handleEmboss.bind(this);
   }
 
   async webviewloaded() {
@@ -123,13 +126,40 @@ class App extends Component {
 
   }
 
-  async handleLimitStatus () {
-     let s = await this.context.GetBackend().gcode_M119 ();
-     console.log (s);
+  async handleLimitStatus() {
+    let s = await this.context.GetBackend().gcode_M119();
+    console.log(s);
+    console.log(typeof (s));
+
+    if (s)
+    {
+      s.map ((limit) => {
+        console.log (limit);
+        let state = 0;
+        if ("x_min" in limit)
+        {
+          if (limit['x_min'] === 'open')
+            state = 2;
+          else if (limit['x_min'] === 'TRIGGERED')
+            state = 1;
+          this.setState ({limitx: state});
+        }
+        if ("y_min" in limit)
+        {
+          if (limit['y_min'] === 'open')
+            state = 2;
+          else if (limit['y_min'] === 'TRIGGERED')
+            state = 1;
+          this.setState ({limity: state});
+        }
+      }
+
+      )
+    }
   }
 
-  handleOpenCom () {
-    this.context.GetBackend().gcode_open (this.context.Params.comport);
+  handleOpenCom() {
+    this.context.GetBackend().gcode_open(this.context.Params.comport);
     this.setState({ connected: true });
   }
 
@@ -145,12 +175,24 @@ class App extends Component {
       );
     }
   }
-  async handleMove (x,y)
-  {
-    let ret = await this.context.GetBackend().gcode_move_rel(x,y);
-    console.log (ret);
+  async handleMove(x, y) {
+    let ret = await this.context.GetBackend().gcode_move_rel(x, y);
+    console.log(ret);
   }
 
+  async handleEmboss() {
+    let ret = await this.context.GetBackend().gcode_M3(1);
+    console.log(ret);
+  }
+  GetLimitStatus(name, state) {
+    
+    if (state === 1)
+      return (<p className='labelelm'>{name} : <span className='limiton'>On</span></p>);
+    if (state === 2)
+      return (<p className='labelelm'>{name} : <span className='limitoff'>Off</span></p>);
+
+    return (<p className='labelelm'>{name} : <span className='limitunknown'>???</span></p>);
+  }
   render() {
     return (
       <div className="App">
@@ -205,7 +247,7 @@ class App extends Component {
 
         </div>
         <div>
-          <hr className='min-w-dvw text-red-500 py-1 px-1 mx-1 my-2 bg-blue-200' />
+          <hr className='min-w-dvw py-1 px-1 mx-1 my-2 bg-blue-200' />
         </div>
         <div className='flex'>
           <button className="btn btn-blue"
@@ -214,7 +256,8 @@ class App extends Component {
 
             Etat des fin de course
           </button>
-
+          {this.GetLimitStatus('X', this.state.limitx)}
+          {this.GetLimitStatus('Y (Paper)', this.state.limity)}
         </div>
         <div className='flex'>
           <button className="btn btn-blue"
@@ -241,7 +284,7 @@ class App extends Component {
           <div className=""></div>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={()=>{this.handleMove(0,+10)}}>
+            onClick={() => { this.handleMove(0, +10) }}>
 
             Y++
           </button>
@@ -251,7 +294,7 @@ class App extends Component {
           <div className=""></div>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={()=>{this.handleMove(0,+1)}}>
+            onClick={() => { this.handleMove(0, +1) }}>
 
             Y+
           </button>
@@ -260,33 +303,33 @@ class App extends Component {
 
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={()=>{this.handleMove(-10,0)}}>
+            onClick={() => { this.handleMove(-10, 0) }}>
 
             X--
           </button>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={()=>{this.handleMove(-1,0)}}>
+            onClick={() => { this.handleMove(-1, 0) }}>
 
             X-
           </button>
 
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+            onClick={() => { this.handleEmboss() }}>
 
             Embosser 1 point
           </button>
 
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={()=>{this.handleMove(1,0)}}>
+            onClick={() => { this.handleMove(1, 0) }}>
 
             X+
           </button>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={()=>{this.handleMove(10,1)}}>
+            onClick={() => { this.handleMove(10, 1) }}>
 
             X++
           </button>
@@ -296,7 +339,7 @@ class App extends Component {
           <div className=""></div>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={()=>{this.handleMove(0,-1)}}>
+            onClick={() => { this.handleMove(0, -1) }}>
 
             Y-
           </button>
@@ -306,7 +349,7 @@ class App extends Component {
           <div className=""></div>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={()=>{this.handleMove(0,-10)}}>
+            onClick={() => { this.handleMove(0, -10) }}>
 
             Y--
           </button>

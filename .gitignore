@@ -24,3 +24,5 @@ yarn-error.log*
 package-lock.json
 test_brap__parameters.json
 /venv
+gcode/__pycache__/
+
