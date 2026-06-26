@@ -86,11 +86,20 @@ class Api:
         ret = self.gcode.MoveRel(x,y)
         return (ret)
     
+    def setSpeed (self, speed):
+        ret = self.gcode.setSpeed (speed)
+        return ret
+    
     def M119 (self):
         ret = self.gcode.M119()
         print (ret)
         return ret
-
+    
+    def M204 (self, accel):
+        ret = self.gcode.M204(accel)
+        print (ret)
+        return ret
+    
     def M3 (self, s):
         ret = self.gcode.M3 (s)
         print (ret)

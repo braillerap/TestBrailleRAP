@@ -43,6 +43,14 @@ class BackendPyWebview {
     {
         return await window.pywebview.api.MoveRel(x,y);
     }
+     async gcode_set_accel (accel)
+    {
+        return await window.pywebview.api.M204 (accel);
+    }
+    async gcode_set_speed (speed)
+    {
+        return await window.pywebview.api.setSpeed (speed);
+    }
     async gcode_G28 (axis)
     {
         return await window.pywebview.api.G28 (axis);
@@ -100,10 +108,15 @@ class Backend {
             
         }
     }
+    async gcode_G28 (axis)
+    {
+        return await this.backend.gcode_G28(axis);
+    }
     async gcode_open (port)
     {
         return await this.backend.gcode_open (port);
     }
+    
     async gcode_M119 ()
     {
         return await this.backend.gcode_M119 ();
@@ -118,10 +131,15 @@ class Backend {
     {
         return await this.backend.gcode_move_rel(x,y);
     }
-    async gcode_G28 (axis)
+    async gcode_set_accel (accel)
     {
-        return await this.backend.gcode_G28(axis);
+        return await this.backend.gcode_set_accel (accel);
     }
+    async gcode_set_speed (speed)
+    {
+        return await this.backend.gcode_set_speed (speed);
+    }
+    
 }
 
 export default Backend;

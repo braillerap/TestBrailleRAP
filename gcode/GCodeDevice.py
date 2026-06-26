@@ -48,8 +48,7 @@ class GCodeDevice :
             str = self.read ()
         return str
     
-    #def G1 (self, x, y, speed = 3000, acc = 300):
-    #    str = "G1 X{0} Y{0}"
+   
     def M3 (self, s):
         str = "M3 S{0}\r\n".format (s)
         self.hwport.write (str.encode())
@@ -62,6 +61,12 @@ class GCodeDevice :
         str += "G90\r\n"   
 
         self.hwport.write (str.encode())
+
+        str = self.read ()
+        return str
+    def setSpeed (self, speed):
+        str = "G1 F{0}\r\n".format (speed)
+        self.hwport.write (str.encode ())
 
         str = self.read ()
         return str
@@ -93,3 +98,10 @@ class GCodeDevice :
         except Exception as e:
             print ("Exception raised", repr(e))
             return None
+        
+    def M204(self, accel):
+        str = "M204 T{0}\r\n".format (accel)
+        self.hwport.write (str.encode ())
+
+        str = self.read ()
+        return str

@@ -52,6 +52,9 @@ class App extends Component {
         listport: [],
         limitx: 0,
         limity: 0,
+        speed: 3000,
+        accel: 1500,
+
       }
     );
     this.handleChangePort = this.handleChangePort.bind(this);
@@ -60,12 +63,17 @@ class App extends Component {
     this.setConnectedState = this.setConnectedState.bind(this);
     this.setDisconnectedState = this.setDisconnectedState.bind(this);
     this.voidfunc = this.voidfunc.bind(this);
+
+    this.handleChangeAcc = this.handleChangeAcc.bind(this);
+    this.handleChangeSpeed = this.handleChangeSpeed.bind(this);
+    this.handleEmboss = this.handleEmboss.bind(this);
+    this.handleHome = this.handleHome.bind(this);
+    this.handleLimitStatus = this.handleLimitStatus.bind(this);
     this.handleRefreshPort = this.handleRefreshPort.bind(this);
     this.handleOpenCom = this.handleOpenCom.bind(this);
-    this.handleLimitStatus = this.handleLimitStatus.bind(this);
-    this.handleHome = this.handleHome.bind(this);
+
     this.backendTest = this.backendTest.bind(this);
-    this.handleEmboss = this.handleEmboss.bind(this);
+
   }
 
   async webviewloaded() {
@@ -129,9 +137,8 @@ class App extends Component {
     console.log(ret);
   }
 
-  async handleHome (axis)
-  {
-    let ret = await this.context.GetBackend().gcode_G28 (axis);
+  async handleHome(axis) {
+    let ret = await this.context.GetBackend().gcode_G28(axis);
   }
 
   async handleLimitStatus() {
@@ -139,26 +146,23 @@ class App extends Component {
     console.log(s);
     console.log(typeof (s));
 
-    if (s)
-    {
-      s.map ((limit) => {
-        console.log (limit);
+    if (s) {
+      s.map((limit) => {
+        console.log(limit);
         let state = 0;
-        if ("x_min" in limit)
-        {
+        if ("x_min" in limit) {
           if (limit['x_min'] === 'open')
             state = 2;
           else if (limit['x_min'] === 'TRIGGERED')
             state = 1;
-          this.setState ({limitx: state});
+          this.setState({ limitx: state });
         }
-        if ("y_min" in limit)
-        {
+        if ("y_min" in limit) {
           if (limit['y_min'] === 'open')
             state = 2;
           else if (limit['y_min'] === 'TRIGGERED')
             state = 1;
-          this.setState ({limity: state});
+          this.setState({ limity: state });
         }
       }
 
@@ -183,14 +187,26 @@ class App extends Component {
       );
     }
   }
+  async handleChangeAcc(evt) {
+    this.context.GetBackend().gcode_set_accel(evt.target.value);
+    this.setState({ accel: evt.target.value });
+  }
+
+  async handleChangeSpeed(evt) {
+    console.log(evt);
+    console.log(evt.target.value);
+    this.context.GetBackend().gcode_set_speed(evt.target.value);
+    this.setState({ speed: evt.target.value });
+  }
+
   async handleMove(x, y) {
     let ret = await this.context.GetBackend().gcode_move_rel(x, y);
     console.log(ret);
   }
 
-  
+
   GetLimitStatus(name, state) {
-    
+
     if (state === 1)
       return (<p className='labelelm'>{name} : <span className='limiton'>On</span></p>);
     if (state === 2)
@@ -267,19 +283,19 @@ class App extends Component {
         <div className='flex'>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={()=>{this.handleHome(['x'])}}>
+            onClick={() => { this.handleHome(['x']) }}>
 
             Home X
           </button>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={()=>{this.handleHome(['y'])}}>
+            onClick={() => { this.handleHome(['y']) }}>
 
             Home Y
           </button>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={()=>{this.handleHome(['x','y'])}}>
+            onClick={() => { this.handleHome(['x', 'y']) }}>
 
             Home XY
           </button>
@@ -362,30 +378,59 @@ class App extends Component {
           <div className="">  </div>
         </div>
         <div className='flex'>
-          <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={this.voidfunc}>
 
-            X+
-          </button>
-          <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+          <p className='labelelm'>Vitesse (mm/m):</p>
 
-            Y+
-          </button>
-          <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+          <select className='selectnum'
+            onChange={this.handleChangeSpeed}
+            value={this.state.speed}
+            id="selectspeed"
+            name="selectspeed"
+            disabled={!this.state.connected}>
+            <option value='1000'>1000</option>
+            <option value='1500'>1500</option>
+            <option value='2000'>2000</option>
+            <option value='2500'>2500</option>
+            <option value='3000'>3000</option>
+            <option value='4000'>4000</option>
+            <option value='5000'>5000</option>
+            <option value='6000'>6000</option>
+            <option value='8000'>8000</option>
+            <option value='9000'>9000</option>
+            <option value='10000'>10000</option>
+            <option value='11000'>11000</option>
+            <option value='12000'>12000</option>
+          </select>
+          <p className='labelelm'>Acceleration (mm/s-2):</p>
 
-            X-
-          </button>
-          <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+          <select className='selectnum'
+            onChange={this.handleChangeAcc}
+            value={this.state.accel}
+            id="selectaccel"
+            name="selectaccel"
+            disabled={!this.state.connected}>
+            <option value='500'>500</option>
+            <option value='1000'>1000</option>
+            <option value='1500'>1500</option>
+            <option value='2000'>2000</option>
+            <option value='2500'>2500</option>
+            <option value='3000'>3000</option>
+            <option value='3500'>3500</option>
+            <option value='4000'>4000</option>
+            <option value='5000'>5000</option>
+            <option value='6000'>6000</option>
+            <option value='8000'>8000</option>
+            <option value='9000'>9000</option>
+            <option value='10000'>10000</option>
+            <option value='11000'>11000</option>
+            <option value='12000'>12000</option>
+            <option value='13000'>13000</option>
+            <option value='14000'>14000</option>
+            <option value='15000'>15000</option>
+            <option value='15000'>16000</option>
+          </select>
 
-            Y-
-          </button>
+
         </div>
         <div className='flex'>
           <button className="btn btn-blue"
