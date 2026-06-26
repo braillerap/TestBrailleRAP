@@ -43,6 +43,11 @@ class BackendPyWebview {
     {
         return await window.pywebview.api.MoveRel(x,y);
     }
+    async gcode_G28 (axis)
+    {
+        return await window.pywebview.api.G28 (axis);
+
+    }
 };
 
 class Backend {
@@ -112,6 +117,10 @@ class Backend {
     async gcode_move_rel (x,y)
     {
         return await this.backend.gcode_move_rel(x,y);
+    }
+    async gcode_G28 (axis)
+    {
+        return await this.backend.gcode_G28(axis);
     }
 }
 

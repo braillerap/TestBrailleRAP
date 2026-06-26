@@ -63,6 +63,7 @@ class App extends Component {
     this.handleRefreshPort = this.handleRefreshPort.bind(this);
     this.handleOpenCom = this.handleOpenCom.bind(this);
     this.handleLimitStatus = this.handleLimitStatus.bind(this);
+    this.handleHome = this.handleHome.bind(this);
     this.backendTest = this.backendTest.bind(this);
     this.handleEmboss = this.handleEmboss.bind(this);
   }
@@ -97,10 +98,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
-
     window.addEventListener('pywebviewready', this.webviewloaded);
-
-
   }
 
   handleChangePort(event) {
@@ -124,6 +122,16 @@ class App extends Component {
   }
   voidfunc() {
 
+  }
+
+  async handleEmboss() {
+    let ret = await this.context.GetBackend().gcode_M3(1);
+    console.log(ret);
+  }
+
+  async handleHome (axis)
+  {
+    let ret = await this.context.GetBackend().gcode_G28 (axis);
   }
 
   async handleLimitStatus() {
@@ -180,10 +188,7 @@ class App extends Component {
     console.log(ret);
   }
 
-  async handleEmboss() {
-    let ret = await this.context.GetBackend().gcode_M3(1);
-    console.log(ret);
-  }
+  
   GetLimitStatus(name, state) {
     
     if (state === 1)
@@ -262,19 +267,19 @@ class App extends Component {
         <div className='flex'>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+            onClick={()=>{this.handleHome(['x'])}}>
 
             Home X
           </button>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+            onClick={()=>{this.handleHome(['y'])}}>
 
             Home Y
           </button>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={this.voidfunc}>
+            onClick={()=>{this.handleHome(['x','y'])}}>
 
             Home XY
           </button>

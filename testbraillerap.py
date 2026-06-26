@@ -89,12 +89,17 @@ class Api:
     def M119 (self):
         ret = self.gcode.M119()
         print (ret)
-        return ret;
+        return ret
 
     def M3 (self, s):
         ret = self.gcode.M3 (s)
         print (ret)
-        return ret;
+        return ret
+    
+    def G28 (self, axis):
+        ret = self.gcode.G28(axis)
+        print (ret)
+        return ret
 
     def fullscreen(self):
         """toggle main window fullscreen"""

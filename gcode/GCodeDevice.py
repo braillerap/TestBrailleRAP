@@ -39,6 +39,15 @@ class GCodeDevice :
                 raise Exception("Timeout in printer communication")
         return gcode_out
     
+    def G28 (self, axis):
+        for a in axis:
+            if (a == 'x'):
+                self.hwport.write ("G28 X\r\n".encode())
+            if (a == 'y'):
+                self.hwport.write ("G28 Y\r\n".encode())
+            str = self.read ()
+        return str
+    
     #def G1 (self, x, y, speed = 3000, acc = 300):
     #    str = "G1 X{0} Y{0}"
     def M3 (self, s):
