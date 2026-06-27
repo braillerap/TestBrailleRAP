@@ -61,11 +61,11 @@ class GCodeDevice :
         str += "G90\r\n"   
 
         self.hwport.write (str.encode())
-
         str = self.read ()
         return str
+
     def setSpeed (self, speed):
-        str = "G1 F{0}\r\n".format (speed)
+        str = "G1 F{0}\r\n".format(speed)
         self.hwport.write (str.encode ())
 
         str = self.read ()
@@ -77,7 +77,6 @@ class GCodeDevice :
             self.hwport.write(str.encode("\r\n\r\n"))   #cleanup
             self.hwport.flushInput()  # Flush startup text in serial input
             self.hwport.write (str.encode("M119\r\n"))
-            #time.sleep(0.5)
             ret = self.read()
             ll = ret.splitlines()
             print ('M119', ll, ret);
