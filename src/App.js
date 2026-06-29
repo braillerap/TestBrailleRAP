@@ -36,7 +36,6 @@
  * SPDX-License-Identifier: GPL-3.0 
  */
 import { Component } from 'react';
-import logo from './logo.svg';
 import AppOption from "./components/AppOption";
 import AppContext from "./components/AppContext";
 
@@ -54,6 +53,7 @@ class App extends Component {
         limity: 0,
         speed: 3000,
         accel: 1500,
+        theme: "normal"
 
       }
     );
@@ -139,6 +139,7 @@ class App extends Component {
 
   async handleHome(axis) {
     let ret = await this.context.GetBackend().gcode_G28(axis);
+    console.log(ret);
   }
 
   async handleLimitStatus() {
@@ -164,6 +165,7 @@ class App extends Component {
             state = 1;
           this.setState({ limity: state });
         }
+        return (0);
       }
 
       )
@@ -216,14 +218,14 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="App">
+      <div className={this.state.theme + " App"}>
 
         <div className='min-w-80 mx-auto text-center' >
           <h1 className="text-3xl font-bold">
             TestBrailleRAP
           </h1>
           <h2>Version:{`${process.env.REACT_APP_VERSION}`}</h2>
-
+          <p className='labelelm'>theme: {this.state.theme}</p>
         </div>
         <div className='flex'>
           <button className="btn btn-blue"
@@ -268,7 +270,7 @@ class App extends Component {
 
         </div>
         <div>
-          <hr className='min-w-dvw py-1 px-1 mx-1 my-2 bg-blue-200' />
+          <hr className='min-w-dvw py-1 px-1 mx-1 my-2 text-red-500 bg-blue-200' />
         </div>
         <div className='flex'>
           <button className="btn btn-blue"
@@ -442,6 +444,7 @@ class App extends Component {
           </button>
 
         </div>
+
         <div className='flex'>
           <input type="text" className='textedit'></input>
           <button className="btn btn-blue"
@@ -450,7 +453,16 @@ class App extends Component {
 
             Envoyer une commande GCODE
           </button>
-
+        </div>
+        <div className='flex'>
+          <select className='select'
+            onChange={(evt)=>{this.setState({theme:evt.target.value})}}
+            value={this.state.theme}
+          >
+            <option value="normal">Normal</option>
+            <option value="thdark">Dark</option>
+            <option value="thlight">Light</option>
+          </select>
         </div>
       </div>
     );

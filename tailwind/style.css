@@ -1,9 +1,53 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
+@theme {
+  
+  --color-btnbackgnd: var(--color-blue-700);
+  --color-btnbackdisabled: var(--color-gray-700);
+  --color-btnbackhover: var(--color-blue-300);
+  --color-btnborder:var (--color-blue-700);
+  --color-btnborderdisabled:var (--color-gray-700);
+  --color-btnborderhover:var (--color-blue-500);
+  --color-backgnd: var(--color-blue-100);
+  --color-txtbtn: var(--color-white);
+  --color-txtbtnhover: var(--color-black);
+  --color-txtbtndisabled: var(--color-gray-300);
+  --color-apptxt: var(--color-black);
+}
+
+@layer theme {
+
+  .thlight {
+    
+    --color-btnbackgnd: var(--color-gray-300);
+    --color-btnbackdisabled: var(--color-gray-500);
+    --color-btnbackhover: var(--color-gray-500);
+    --color-btnborder:var(--color-black);
+    --color-btnborderdisabled:var(--color-gray-500);
+    --color-btnborderhover:var(--color-gray-500);
+    --color-backgnd: var(--color-gray-100);
+    --color-txtbtn: var(--color-black);
+    --color-txtbtnhover: var(--color-gray-200);
+    --color-txtbtndisabled: var(--color-gray-700);
+    --color-apptxt: var(--color-black);
+  }
+
+  .thdark {
+    --color-btnbackgnd: var(--color-gray-700);
+    --color-btnbackdisabled: var(--color-gray-900);
+    --color-btnbackhover: var(--color-gray-500);
+    --color-btnborder:var(--color-gray-700);
+    --color-btnborderdisabled:var(--color-gray-800);
+    --color-btnborderhover:var(--color-gray-100);
+    --color-backgnd: var(--color-gray-900);
+    --color-txtbtn: var(--color-white);
+    --color-txtbtnhover: var(--color-gray-100);
+    --color-txtbtndisabled: var(--color-gray-700);
+    --color-apptxt: var(--color-white);
+  }
+}
 .App {
-  @apply bg-blue-100 text-black min-h-dvh;
+  @apply bg-backgnd text-apptxt min-h-dvh;
 }
 
 .btn {
@@ -11,15 +55,15 @@
 }
 
 .btn-blue {
-  @apply bg-blue-700 text-white border-2 border-blue-700;
+  @apply bg-btnbackgnd text-txtbtn border-2 border-btnborder;
 }
 
 .btn-blue:disabled {
-  @apply bg-gray-700 text-gray-300 border-2 border-gray-700;
+  @apply bg-btnbackdisabled text-txtbtndisabled border-2 border-btnborderdisabled;
 }
 
 .btn-blue:hover:not([disabled]) {
-  @apply bg-blue-100 text-black border-2 border-blue-500;
+  @apply bg-btnbackhover text-txtbtnhover border-2 border-btnborderhover;
 }
 
 .textedit {
