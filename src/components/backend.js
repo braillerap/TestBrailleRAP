@@ -110,34 +110,50 @@ class Backend {
     }
     async gcode_G28 (axis)
     {
-        return await this.backend.gcode_G28(axis);
+        if (this.backendready)
+            return await this.backend.gcode_G28(axis);
+
+        return '';
     }
     async gcode_open (port)
     {
-        return await this.backend.gcode_open (port);
+        if (this.backendready)
+            return await this.backend.gcode_open (port);
+        return -1;
     }
     
     async gcode_M119 ()
     {
-        return await this.backend.gcode_M119 ();
+        if (this.backendready)
+            return await this.backend.gcode_M119 ();
+        
+        return '';
     }
 
     async gcode_M3 (s)
     {
-        return await this.backend.gcode_M3(s);
+        if (this.backendready)
+            return await this.backend.gcode_M3(s);
+        return '';
     }
 
     async gcode_move_rel (x,y)
     {
-        return await this.backend.gcode_move_rel(x,y);
+        if (this.backendready)
+            return await this.backend.gcode_move_rel(x,y);
+        return '';
     }
     async gcode_set_accel (accel)
     {
-        return await this.backend.gcode_set_accel (accel);
+        if (this.backendready)
+            return await this.backend.gcode_set_accel (accel);
+        return '';
     }
     async gcode_set_speed (speed)
     {
-        return await this.backend.gcode_set_speed (speed);
+        if (this.backendready)
+            return await this.backend.gcode_set_speed (speed);
+        return '';
     }
     
 }
