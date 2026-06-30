@@ -13,6 +13,8 @@
   --color-txtbtnhover: var(--color-black);
   --color-txtbtndisabled: var(--color-gray-300);
   --color-apptxt: var(--color-black);
+  --color-higlighton: var(--color-yellow-500);
+  --color-higlightoff: var(--color-black);
 }
 
 @layer theme {
@@ -30,20 +32,24 @@
     --color-txtbtnhover: var(--color-gray-200);
     --color-txtbtndisabled: var(--color-gray-700);
     --color-apptxt: var(--color-black);
+    --color-higlighton: var(--color-black);
+    --color-higlightoff: var(--color-black);
   }
 
   .thdark {
     --color-btnbackgnd: var(--color-gray-700);
     --color-btnbackdisabled: var(--color-gray-900);
     --color-btnbackhover: var(--color-gray-500);
-    --color-btnborder:var(--color-gray-700);
-    --color-btnborderdisabled:var(--color-gray-800);
+    --color-btnborder:var(--color-gray-300);
+    --color-btnborderdisabled:var(--color-gray-700);
     --color-btnborderhover:var(--color-gray-100);
     --color-backgnd: var(--color-gray-900);
     --color-txtbtn: var(--color-white);
     --color-txtbtnhover: var(--color-gray-100);
-    --color-txtbtndisabled: var(--color-gray-700);
+    --color-txtbtndisabled: var(--color-gray-500);
     --color-apptxt: var(--color-white);
+    --color-higlighton: var(--color-white);
+    --color-higlightoff: var(--color-white);
   }
 }
 .App {
@@ -75,37 +81,45 @@
 }
 
 .select {
-  @apply font-bold bg-blue-700 text-white px-4 py-2 xl:min-w-40 2xl:min-w-80 rounded-full;
+  @apply font-bold bg-btnbackgnd text-txtbtn px-4 py-2 mx-1 my-1 xl:min-w-40 2xl:min-w-80 rounded-full;
 }
 
 .select:disabled {
-  @apply font-bold bg-gray-700 text-gray-300 border-2 border-gray-700;
+  @apply font-bold bg-btnbackdisabled text-txtbtndisabled border-2 border-gray-700;
 }
 
 .selectnum {
-  @apply font-bold bg-blue-700 text-white px-4 py-2 xl:min-w-20 2xl:min-w-40 rounded-full;
+  @apply font-bold bg-btnbackgnd text-txtbtn px-4 py-2 mx-1 my-1 xl:min-w-20 2xl:min-w-40 rounded-full;
 }
 
 .selectnum:disabled {
-  @apply font-bold bg-gray-700 text-gray-300 border-2 border-gray-700;
+  @apply font-bold bg-btnbackdisabled text-txtbtndisabled border-2 border-gray-700;
 }
 
 .selectnum option {
-  @apply font-bold bg-blue-700;
+  @apply font-bold bg-btnbackgnd text-txtbtn;
 }
 
 .labelelm {
   @apply font-bold py-2 px-4 mx-1 my-1
 }
 
+.labellimit {
+  @apply font-bold text-xl py-2 px-4 mx-1 my-1
+}
+
 .limiton {
-  @apply text-yellow-600;
+  @apply text-higlighton;
 }
 
 .limitoff {
-  @apply text-black;
+  @apply text-higlightoff;
 }
 
 .limitunknown {
-  @apply text-gray-300;
+  @apply text-higlightoff;
+}
+
+.hseparator {
+  @apply text-apptxt bg-backgnd min-w-dvw py-1 px-1 mx-1 my-2;
 }

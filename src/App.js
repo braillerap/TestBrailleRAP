@@ -210,11 +210,11 @@ class App extends Component {
   GetLimitStatus(name, state) {
 
     if (state === 1)
-      return (<p className='labelelm'>{name} : <span className='limiton'>On</span></p>);
+      return (<p className='labellimit'>{name} : <span className='limiton'>On</span></p>);
     if (state === 2)
-      return (<p className='labelelm'>{name} : <span className='limitoff'>Off</span></p>);
+      return (<p className='labellimit'>{name} : <span className='limitoff'>Off</span></p>);
 
-    return (<p className='labelelm'>{name} : <span className='limitunknown'>???</span></p>);
+    return (<p className='labellimit'>{name} : <span className='limitunknown'>???</span></p>);
   }
   render() {
     return (
@@ -270,7 +270,7 @@ class App extends Component {
 
         </div>
         <div>
-          <hr className='min-w-dvw py-1 px-1 mx-1 my-2 text-red-500 bg-blue-200' />
+          <hr className='hseparator' />
         </div>
         <div className='flex'>
           <button className="btn btn-blue"
@@ -435,15 +435,7 @@ class App extends Component {
 
 
         </div>
-        <div className='flex'>
-          <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={this.backendTest}>
-
-            Test back end
-          </button>
-
-        </div>
+        
 
         <div className='flex'>
           <input type="text" className='textedit'></input>
@@ -453,6 +445,9 @@ class App extends Component {
 
             Envoyer une commande GCODE
           </button>
+        </div>
+        <div>
+          <hr className='hseparator' />
         </div>
         <div className='flex'>
           <select className='select'
