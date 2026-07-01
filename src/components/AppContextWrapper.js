@@ -42,9 +42,6 @@ import AppOption from './AppOption.js';
 import LocaleString from './localestring.js';
 import Backend from './backend.js';
 
-
-
-
 let params = AppOption;
 
 let pywebviewready = false;
@@ -66,7 +63,6 @@ const AppContextWrapper = (props) => {
         return (localedata);
     }
     function setAppLocale(localecode) {
-        
         localedata.setLocaleCode(localecode);
         setLocale(localedata.getLocaleCode());
     }
@@ -75,8 +71,6 @@ const AppContextWrapper = (props) => {
     function setOption(opt) {
         setParams(opt);
         _backend.writeAppParameters(opt);
-            
-
     }
 
     function getLocaleString(id) {
