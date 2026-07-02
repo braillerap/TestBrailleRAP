@@ -54,7 +54,7 @@ class App extends Component {
         speed: 3000,
         accel: 1500,
         theme: "normal",
-        comevent:""
+        comevent: ""
 
       }
     );
@@ -73,7 +73,7 @@ class App extends Component {
     this.handleRefreshPort = this.handleRefreshPort.bind(this);
     this.handleOpenCom = this.handleOpenCom.bind(this);
     this.handleQuit = this.handleQuit.bind(this);
-    
+
 
   }
 
@@ -110,6 +110,10 @@ class App extends Component {
     window.addEventListener('pywebviewready', this.webviewloaded);
   }
 
+  /*!
+     *\brief Communication port select callback.
+     *
+     */
   handleChangePort(event) {
     let option = {
       ...this.context.Params,
@@ -130,16 +134,28 @@ class App extends Component {
 
   }
 
+  /*!
+     *\brief Emboss a dot button callback. Instruct the BrailleRAP to execute a homing reference course on the selected axis.
+     *
+     */
   async handleEmboss() {
     let ret = await this.context.GetBackend().gcode_M3(1);
     console.log(ret);
   }
 
+  /*!
+     *\brief Homing button callback. Instruct the BrailleRAP to execute a homing reference course on the selected axis.
+     *
+     */
   async handleHome(axis) {
     let ret = await this.context.GetBackend().gcode_G28(axis);
     console.log(ret);
   }
 
+  /*!
+     *\brief Refresh endstop button callback. Update the state of BrailleRAP endstop.
+     *
+     */
   async handleLimitStatus() {
     let s = await this.context.GetBackend().gcode_M119();
     console.log(s);
@@ -170,11 +186,19 @@ class App extends Component {
     }
   }
 
+  /*!
+     *\brief Connect button callback. Open the selected serial communication port.
+     *
+     */
   handleOpenCom() {
     this.context.GetBackend().gcode_open(this.context.Params.comport);
     this.setState({ connected: true });
   }
 
+  /*!
+     *\brief Refresh port button callback. Call backend to update the communication port list
+     *
+     */
   handleRefreshPort() {
     if (this.state.webviewready) {
       let msg = this.context.GetLocaleString("app.wait");
@@ -187,11 +211,20 @@ class App extends Component {
       );
     }
   }
+
+  /*!
+     *\brief Change acceleration select callback. Change the acceleration ramp when moving the BrailleRAP head.
+     *
+     */
   async handleChangeAcc(evt) {
     this.context.GetBackend().gcode_set_accel(evt.target.value);
     this.setState({ accel: evt.target.value });
   }
 
+  /*!
+     *\brief Change speed select callback. Change the moving speed of the BrailleRAP
+     *
+     */
   async handleChangeSpeed(evt) {
     console.log(evt);
     console.log(evt.target.value);
@@ -199,20 +232,32 @@ class App extends Component {
     this.setState({ speed: evt.target.value });
   }
 
+  /*!
+     *\brief Move button calback. Relative move the BrailleRAP head in desired x,y direction 
+     *
+     */
   async handleMove(x, y) {
     let ret = await this.context.GetBackend().gcode_move_rel(x, y);
     console.log(ret);
   }
-  async handleQuit (e)
-  {
+
+  /*!
+     *\brief Quit button, exit the app
+     *
+     */
+  async handleQuit(e) {
     e.preventDefault();
-    await this.context.GetBackend().confirm_dialog("TestBrailleRAP", this.context.GetLocaleString("app.confirquit")).then ((ret) => {
-        if (ret === true)
-            this.context.GetBackend().quit();
+    await this.context.GetBackend().confirm_dialog("TestBrailleRAP", this.context.GetLocaleString("app.confirquit")).then((ret) => {
+      if (ret === true)
+        this.context.GetBackend().quit();
     });
-    
+
   }
 
+  /*!
+     *\brief Build html display from endstop status
+     *
+     */
   GetLimitStatus(name, state) {
 
     if (state === 1)
@@ -222,6 +267,7 @@ class App extends Component {
 
     return (<p className='labellimit'>{name} : <span className='limitunknown'>???</span></p>);
   }
+
   render() {
     return (
       <div className={this.state.theme + " App"}>
@@ -237,10 +283,13 @@ class App extends Component {
           <button className="btn btn-blue"
             disabled={this.state.connected}
             onClick={this.handleOpenCom}>
-              {this.context.GetLocaleString("param.connect")}
-            
+            {this.context.GetLocaleString("param.connect")}
           </button>
-          <p className='labelelm'>&nbsp;{this.context.GetLocaleString("param.labelport")}:</p>
+
+          <label className='labelelm'
+            htmlFor='selectport'>
+            &nbsp;{this.context.GetLocaleString("param.labelport")}:
+          </label>
 
           <select className='select'
             onChange={this.handleChangePort}
@@ -271,8 +320,8 @@ class App extends Component {
           <button className="btn btn-blue"
             disabled={!this.state.connected}
             onClick={this.setDisconnectedState}>
-              {this.context.GetLocaleString("param.disconnect")}
-            
+            {this.context.GetLocaleString("param.disconnect")}
+
           </button>
 
         </div>
@@ -283,8 +332,8 @@ class App extends Component {
           <button className="btn btn-blue"
             disabled={!this.state.connected}
             onClick={this.handleLimitStatus}>
-              {this.context.GetLocaleString("param.endstopstatus")}
-            
+            {this.context.GetLocaleString("param.endstopstatus")}
+
           </button>
           {this.GetLimitStatus('X', this.state.limitx)}
           {this.GetLimitStatus('Y (Paper)', this.state.limity)}
@@ -293,20 +342,20 @@ class App extends Component {
           <button className="btn btn-blue"
             disabled={!this.state.connected}
             onClick={() => { this.handleHome(['x']) }}>
-              {this.context.GetLocaleString("param.homex")}
-            
+            {this.context.GetLocaleString("param.homex")}
+
           </button>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
             onClick={() => { this.handleHome(['y']) }}>
-              {this.context.GetLocaleString("param.homey")}
-            
+            {this.context.GetLocaleString("param.homey")}
+
           </button>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
             onClick={() => { this.handleHome(['x', 'y']) }}>
-              {this.context.GetLocaleString("param.homexy")}
-            
+            {this.context.GetLocaleString("param.homexy")}
+
           </button>
         </div>
         <div className="centralgrid">
@@ -347,8 +396,8 @@ class App extends Component {
           <button className="btn btn-blue"
             disabled={!this.state.connected}
             onClick={() => { this.handleEmboss() }}>
-              {this.context.GetLocaleString("param.makedot")}
-            
+            {this.context.GetLocaleString("param.makedot")}
+
           </button>
 
           <button className="btn btn-blue"
@@ -388,8 +437,11 @@ class App extends Component {
         </div>
         <div className='flex'>
 
-          <p className='labelelm'>{this.context.GetLocaleString("param.speed")}:</p>
 
+          <label className='labelelm'
+            htmlFor='selectspeed'>
+            {this.context.GetLocaleString("param.speed")}:
+          </label>
           <select className='selectnum'
             onChange={this.handleChangeSpeed}
             value={this.state.speed}
@@ -410,7 +462,11 @@ class App extends Component {
             <option value='11000'>11000</option>
             <option value='12000'>12000</option>
           </select>
-          <p className='labelelm'>{this.context.GetLocaleString("param.speed")}:</p>
+
+          <label className='labelelm'
+            htmlFor='selectaccel'>
+            {this.context.GetLocaleString("param.accel")}:
+          </label>
 
           <select className='selectnum'
             onChange={this.handleChangeAcc}
@@ -442,37 +498,47 @@ class App extends Component {
 
 
         </div>
-        
+
 
         <div className='flex'>
           <input type="text" className='textedit'></input>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
             onClick={this.voidfunc}>
-            {this.context.GetLocaleString("param.send-gcode")}  
-            Envoyer une commande GCODE
+            {this.context.GetLocaleString("param.send-gcode")}
+            
           </button>
         </div>
         <div>
           <hr className='hseparator' />
         </div>
         <div className='flex'>
-          <p className='labelelm'>{this.context.GetLocaleString("param.theme")}  </p>
+          <label className='labelelm'
+            htmlFor='themeselect'
+          >
+            {this.context.GetLocaleString("param.theme")}
+          </label>
           <select className='select'
-            onChange={(evt)=>{this.setState({theme:evt.target.value})}}
+            name="themeselect" id="themeselect"
+            onChange={(evt) => { this.setState({ theme: evt.target.value }) }}
             value={this.state.theme}
           >
             <option value="normal">{this.context.GetLocaleString("param.theme-normal")}</option>
             <option value="thdark">{this.context.GetLocaleString("param.theme-wb")}</option>
             <option value="thlight">{this.context.GetLocaleString("param.theme-bw")}</option>
           </select>
+
+
+
         </div>
+
+
         <div className='flex '>
           <button className="btn btn-blue"
-            
+
             onClick={this.handleQuit}>
-            {this.context.GetLocaleString("app.quit")}  
-            
+            {this.context.GetLocaleString("app.quit")}
+
           </button>
         </div>
       </div>
