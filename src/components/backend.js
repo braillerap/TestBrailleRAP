@@ -56,6 +56,10 @@ class BackendPyWebview {
         return await window.pywebview.api.G28 (axis);
 
     }
+    quit ()
+    {
+        return window.pywebview.api.quit ();
+    }
 };
 
 class Backend {
@@ -154,6 +158,18 @@ class Backend {
         if (this.backendready)
             return await this.backend.gcode_set_speed (speed);
         return '';
+    }
+    async confirm_dialog (title, message)
+    {
+        if (this.backendready)
+            return await this.backend.confirm_dialog (title, message);
+
+        return false;
+    }
+    quit ()
+    {
+        if (this.backendready)
+            this.backend.quit ();
     }
     
 }

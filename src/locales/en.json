@@ -1,14 +1,27 @@
 {
     "app.loading": "Loading…",
     "app.wait": "Please wait…",
+    "app.quit":"Quit",
     "app.confirquit": "Are you sure you want to quit ?",
     
     "param.locale": "Application language",
     "param.labelport": "Communication serial port",
     "param.nocomport": "No serial port available",
-    "param.buttonrefresh": "Refresh",
-    
-    "param.comportrefreshed": "Communication ports actualized"
+    "param.buttonrefresh": "Refresh COM",
+    "param.connect": "Connect",
+    "param.disconnect": "Disconnect",
+    "param.endstopstatus": "Endstop status",
+    "param.homex": "Home X",
+    "param.homey": "Home Y",
+    "param.homexy": "Home XY",
+    "param.makedot": "Make a Dot",
+    "param.speed": "Speed (mm/m)",
+    "param.accel": "Acceleration (mm/s-2)",
+    "param.send-gcode":"Send GCODE command",
+    "param.comportrefreshed": "Communication ports actualized",
+    "param.theme": "Theme",
    
-    
+    "param.theme-normal":"Normal",
+    "param.theme-wb":"White on black",
+    "param.theme-bw":"Black on white"
 }
