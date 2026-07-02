@@ -44,7 +44,6 @@ import Backend from './backend.js';
 
 let params = AppOption;
 
-let pywebviewready = false;
 let locale = "fr";
 let localedata = new LocaleString();
 

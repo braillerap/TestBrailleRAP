@@ -38,7 +38,7 @@
 import { Component } from 'react';
 import AppOption from "./components/AppOption";
 import AppContext from "./components/AppContext";
-import locales from './components/locales';
+
 
 class App extends Component {
   static contextType = AppContext;
@@ -76,7 +76,7 @@ class App extends Component {
     this.handleOpenCom = this.handleOpenCom.bind(this);
     this.handleQuit = this.handleQuit.bind(this);
 
-    
+
   }
 
   async webviewloaded() {
@@ -299,34 +299,34 @@ class App extends Component {
           <p className='labelelm'>theme: {this.state.theme}</p>
         </div>
 
-        <div className='flex'>
+        <div className='lg:flex'>
           <button className="btn btn-blue"
             disabled={this.state.connected}
             onClick={this.handleOpenCom}>
             {this.context.GetLocaleString("param.connect")}
           </button>
+          <div>
+            <label className='labelelm'
+              htmlFor='selectport'>
+              &nbsp;{this.context.GetLocaleString("param.labelport")}:
+            </label>
 
-          <label className='labelelm'
-            htmlFor='selectport'>
-            &nbsp;{this.context.GetLocaleString("param.labelport")}:
-          </label>
+            <select className='select'
+              onChange={this.handleChangePort}
+              value={this.context.Params.comport}
+              id="selectport"
+              name="selectport"
+              disabled={this.state.connected}>
 
-          <select className='select'
-            onChange={this.handleChangePort}
-            value={this.context.Params.comport}
-            id="selectport"
-            name="selectport"
-            disabled={this.state.connected}>
-
-            {this.state.listport.map((line, index) => {
-              if (line.device === this.context.Params.comport)
-                return (<option aria-selected={true} key={line.device} value={line.device}>{line.device} {line.description} </option>);
-              else
-                return (<option aria-selected={false} key={line.device} value={line.device}>{line.device} {line.description} </option>);
-            })
-            }
-          </select>
-
+              {this.state.listport.map((line, index) => {
+                if (line.device === this.context.Params.comport)
+                  return (<option aria-selected={true} key={line.device} value={line.device}>{line.device} {line.description} </option>);
+                else
+                  return (<option aria-selected={false} key={line.device} value={line.device}>{line.device} {line.description} </option>);
+              })
+              }
+            </select>
+          </div>
           <button
             disabled={this.state.connected}
             className="btn btn-blue"
@@ -532,57 +532,59 @@ class App extends Component {
         <div>
           <hr className='hseparator' />
         </div>
-        <div className='flex'>
-          <label className='labelelm'
-            htmlFor='themeselect'
-          >
-            {this.context.GetLocaleString("param.theme")}
-          </label>
-          <select className='select'
-            name="themeselect" id="themeselect"
-            onChange={(evt) => { this.setState({ theme: evt.target.value }) }}
-            value={this.state.theme}
-          >
-            <option value="normal">{this.context.GetLocaleString("param.theme-normal")}</option>
-            <option value="thdark">{this.context.GetLocaleString("param.theme-wb")}</option>
-            <option value="thlight">{this.context.GetLocaleString("param.theme-bw")}</option>
-          </select>
-
-          <label
-            className='labelelm'
-            htmlFor='langid' name="langid">
-            {this.context.GetLocaleString("param.theme")}
-          </label>
-
-
-          <select id="langid"
-            value={this.context.locale}
-            onChange={this.handleChangeLanguage}
-            className='select'
-          >
-            {this.state.localedata.map((item, index) => {
-              if (this.context.Locale === item.lang)
-                return (<option aria-selected={true} key={item.lang} value={item.lang}>{item.desc}</option>);
-              else
-                return (<option aria-selected={false} key={item.lang} value={item.lang}>{item.desc}</option>);
-            })
-            }
+        <div className='lg:flex'>
+          <div>
+            <label className='labelelm'
+              htmlFor='themeselect'
+            >
+              {this.context.GetLocaleString("param.theme")}
+            </label>
+            <select className='select'
+              name="themeselect" id="themeselect"
+              onChange={(evt) => { this.setState({ theme: evt.target.value }) }}
+              value={this.state.theme}
+            >
+              <option value="normal">{this.context.GetLocaleString("param.theme-normal")}</option>
+              <option value="thdark">{this.context.GetLocaleString("param.theme-wb")}</option>
+              <option value="thlight">{this.context.GetLocaleString("param.theme-bw")}</option>
+            </select>
+          </div>
+          <div>
+            <label
+              className='labelelm'
+              htmlFor='langid' name="langid">
+              {this.context.GetLocaleString("param.theme")}
+            </label>
 
 
-          </select>
+            <select id="langid"
+              value={this.context.locale}
+              onChange={this.handleChangeLanguage}
+              className='select'
+            >
+              {this.state.localedata.map((item, index) => {
+                if (this.context.Locale === item.lang)
+                  return (<option aria-selected={true} key={item.lang} value={item.lang}>{item.desc}</option>);
+                else
+                  return (<option aria-selected={false} key={item.lang} value={item.lang}>{item.desc}</option>);
+              })
+              }
 
+
+            </select>
+          </div>
         </div>
 
 
-        <div className='flex '>
-          
-          <button className="btn btn-blue"
+        <div className='flex content-end'>
+          <div className=' min-w-4/5'></div>
+          <button className="btn btn-blue mr-8"
 
             onClick={this.handleQuit}>
             {this.context.GetLocaleString("app.quit")}
 
           </button>
-          
+
         </div>
       </div>
     );
