@@ -69,6 +69,7 @@ class App extends Component {
     this.handleChangeAcc = this.handleChangeAcc.bind(this);
     this.handleChangeLanguage = this.handleChangeLanguage.bind(this);
     this.handleChangeSpeed = this.handleChangeSpeed.bind(this);
+    this.handleChangeTheme = this.handleChangeTheme.bind(this);
     this.handleEmboss = this.handleEmboss.bind(this);
     this.handleHome = this.handleHome.bind(this);
     this.handleLimitStatus = this.handleLimitStatus.bind(this);
@@ -95,7 +96,11 @@ class App extends Component {
       // save app parameters
       this.setState({ params: params });
       this.context.setParams(params);
+      console.log ("set locale", params.lang);
       this.context.SetAppLocale(params.lang);
+      
+      this.setState({theme:params.theme});
+
     }
 
     // update com ports
@@ -231,13 +236,13 @@ class App extends Component {
      *\brief Change language select callback. Change the Application locale and save parameters.
      *
      */
-  handleChangeLanguage(event) {
+  handleChangeLanguage(evt) {
     let param = {
       ...this.context.Params,
-      lang: event.target.value
+      lang: evt.target.value
     };
     this.context.SetOption(param);
-    this.context.SetAppLocale(event.target.value);
+    this.context.SetAppLocale(evt.target.value);
   }
 
   /*!
@@ -249,6 +254,20 @@ class App extends Component {
     console.log(evt.target.value);
     this.context.GetBackend().gcode_set_speed(evt.target.value);
     this.setState({ speed: evt.target.value });
+  }
+
+  /*!
+     *\brief Theme select calback. Apply theme and save parameters
+     *
+     */
+  async handleChangeTheme (evt)
+  {
+    let param = {
+      ...this.context.Params,
+      theme: evt.target.value
+    };
+    this.context.SetOption(param);
+    this.setState({theme:evt.target.value});
   }
 
   /*!
@@ -541,7 +560,7 @@ class App extends Component {
             </label>
             <select className='select'
               name="themeselect" id="themeselect"
-              onChange={(evt) => { this.setState({ theme: evt.target.value }) }}
+              onChange={this.handleChangeTheme}
               value={this.state.theme}
             >
               <option value="normal">{this.context.GetLocaleString("param.theme-normal")}</option>
@@ -553,12 +572,12 @@ class App extends Component {
             <label
               className='labelelm'
               htmlFor='langid' name="langid">
-              {this.context.GetLocaleString("param.theme")}
+              {this.context.GetLocaleString("param.locale")}
             </label>
 
 
             <select id="langid"
-              value={this.context.locale}
+              value={this.context.Locale}
               onChange={this.handleChangeLanguage}
               className='select'
             >

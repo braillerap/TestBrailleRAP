@@ -23,6 +23,7 @@ if getattr(sys, "frozen", False):
 app_options = {
     "comport": "COM1",
     "lang":"fr",
+    "theme":"Normal"
 }
 
 APP_NAME = "TestBrailleRAP"

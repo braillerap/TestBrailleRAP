@@ -1,6 +1,7 @@
 const AppOption = {
     comport:"COM1",
     lang:"fr",
+    theme:"normal"
    
     
 }

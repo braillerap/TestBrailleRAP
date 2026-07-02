@@ -20,6 +20,7 @@
     "param.send-gcode":"Send GCODE command",
     "param.comportrefreshed": "Communication ports actualized",
     "param.theme": "Theme",
+    
    
     "param.theme-normal":"Normal",
     "param.theme-wb":"White on black",
