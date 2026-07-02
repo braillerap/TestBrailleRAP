@@ -56,7 +56,7 @@
   }
 }
 .App {
-  @apply bg-backgnd text-apptxt min-h-dvh;
+  @apply bg-backgnd text-apptxt min-h-dvh overflow-y-auto overflow-x-auto;
 }
 
 .btn {

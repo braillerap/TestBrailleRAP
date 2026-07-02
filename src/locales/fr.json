@@ -1,15 +1,33 @@
 {
     "app.loading": "Chargement en cours…",
     "app.wait": "Patientez…",
+    "app.quit":"Quitter",
     "app.confirquit": "Voulez-vous vraiment quitter l'application ?",
   
     "param.locale": "Langue de l'application",
     "param.labelport": "Port de communication",
     "param.nocomport": "Aucun port de communication disponible",
     "param.buttonrefresh": "Actualiser",
- 
-    "param.comportrefreshed": "Ports de communications actualisés"
     
+   
+    "param.connect": "Connecter",
+    "param.disconnect": "Déconnecter",
+    "param.endstopstatus": "Etats des fins de course",
+    "param.homex": "Référence X",
+    "param.homey": "Référence Y",
+    "param.homexy": "Référence XY",
+    "param.makedot": "Embosser",
+    "param.speed": "Vitesse (mm/m)",
+    "param.accel": "Acceleration (mm/s-2)",
+    "param.send-gcode":"Envoyer une commande GCODE",
+    
+    "param.theme": "Theme",
+
+    "param.comportrefreshed": "Ports de communications actualisés",
+    
+    "param.theme-normal":"Normal",
+    "param.theme-wb":"Blanc sur noir",
+    "param.theme-bw":"Noir sur blanc"
 
     
     

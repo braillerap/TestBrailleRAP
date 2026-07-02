@@ -38,6 +38,7 @@
 import { Component } from 'react';
 import AppOption from "./components/AppOption";
 import AppContext from "./components/AppContext";
+import locales from './components/locales';
 
 class App extends Component {
   static contextType = AppContext;
@@ -54,8 +55,8 @@ class App extends Component {
         speed: 3000,
         accel: 1500,
         theme: "normal",
-        comevent: ""
-
+        comevent: "",
+        localedata: []
       }
     );
     this.handleChangePort = this.handleChangePort.bind(this);
@@ -66,6 +67,7 @@ class App extends Component {
     this.voidfunc = this.voidfunc.bind(this);
 
     this.handleChangeAcc = this.handleChangeAcc.bind(this);
+    this.handleChangeLanguage = this.handleChangeLanguage.bind(this);
     this.handleChangeSpeed = this.handleChangeSpeed.bind(this);
     this.handleEmboss = this.handleEmboss.bind(this);
     this.handleHome = this.handleHome.bind(this);
@@ -74,7 +76,7 @@ class App extends Component {
     this.handleOpenCom = this.handleOpenCom.bind(this);
     this.handleQuit = this.handleQuit.bind(this);
 
-
+    
   }
 
   async webviewloaded() {
@@ -108,6 +110,10 @@ class App extends Component {
 
   async componentDidMount() {
     window.addEventListener('pywebviewready', this.webviewloaded);
+
+    // get locale list for IHM
+    let localedata = this.context.GetLocaleData().getLocaleList();
+    this.setState({ localedata: localedata });
   }
 
   /*!
@@ -222,6 +228,19 @@ class App extends Component {
   }
 
   /*!
+     *\brief Change language select callback. Change the Application locale and save parameters.
+     *
+     */
+  handleChangeLanguage(event) {
+    let param = {
+      ...this.context.Params,
+      lang: event.target.value
+    };
+    this.context.SetOption(param);
+    this.context.SetAppLocale(event.target.value);
+  }
+
+  /*!
      *\brief Change speed select callback. Change the moving speed of the BrailleRAP
      *
      */
@@ -279,6 +298,7 @@ class App extends Component {
           <h2>Version:{`${process.env.REACT_APP_VERSION}`}</h2>
           <p className='labelelm'>theme: {this.state.theme}</p>
         </div>
+
         <div className='flex'>
           <button className="btn btn-blue"
             disabled={this.state.connected}
@@ -299,10 +319,10 @@ class App extends Component {
             disabled={this.state.connected}>
 
             {this.state.listport.map((line, index) => {
-              //if (line.device === this.context.Params.comport)
-              //  return (<option key={line.device} value={line.device}>{line.device} {line.description} </option>);
-              //else
-              return (<option key={line.device} value={line.device}>{line.device} {line.description} </option>);
+              if (line.device === this.context.Params.comport)
+                return (<option aria-selected={true} key={line.device} value={line.device}>{line.device} {line.description} </option>);
+              else
+                return (<option aria-selected={false} key={line.device} value={line.device}>{line.device} {line.description} </option>);
             })
             }
           </select>
@@ -506,7 +526,7 @@ class App extends Component {
             disabled={!this.state.connected}
             onClick={this.voidfunc}>
             {this.context.GetLocaleString("param.send-gcode")}
-            
+
           </button>
         </div>
         <div>
@@ -528,18 +548,41 @@ class App extends Component {
             <option value="thlight">{this.context.GetLocaleString("param.theme-bw")}</option>
           </select>
 
+          <label
+            className='labelelm'
+            htmlFor='langid' name="langid">
+            {this.context.GetLocaleString("param.theme")}
+          </label>
 
+
+          <select id="langid"
+            value={this.context.locale}
+            onChange={this.handleChangeLanguage}
+            className='select'
+          >
+            {this.state.localedata.map((item, index) => {
+              if (this.context.Locale === item.lang)
+                return (<option aria-selected={true} key={item.lang} value={item.lang}>{item.desc}</option>);
+              else
+                return (<option aria-selected={false} key={item.lang} value={item.lang}>{item.desc}</option>);
+            })
+            }
+
+
+          </select>
 
         </div>
 
 
         <div className='flex '>
+          
           <button className="btn btn-blue"
 
             onClick={this.handleQuit}>
             {this.context.GetLocaleString("app.quit")}
 
           </button>
+          
         </div>
       </div>
     );

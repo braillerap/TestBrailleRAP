@@ -56,7 +56,6 @@ const AppContextWrapper = (props) => {
     const [Params, setParams] = useState(params);
     
     const [Locale, setLocale] = useState(locale);
-    
 
     
     function getLocaleData() {
