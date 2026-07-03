@@ -21,7 +21,7 @@
     "clean": "rm -rf build dist",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "builddev": "cross-env GENERATE_SOURCEMAP=true react-scripts build",
+    "builddev": "cross-env GENERATE_SOURCEMAP=true  npm-run-all clean tailwindbuildmini build",
     "test": "react-scripts test",
     "webview": "python testbraillerap.py --debug",
     "tailwindbuildlocal": "npx tailwindcss -i tailwind/style.css -c tailwind/tailwind.config.js -o ./src/index.css",
