@@ -40,6 +40,7 @@ import AppOption from "./components/AppOption";
 import AppContext from "./components/AppContext";
 
 
+
 class App extends Component {
   static contextType = AppContext;
   constructor(props) {
@@ -59,6 +60,39 @@ class App extends Component {
         localedata: []
       }
     );
+
+    // available acceleration values
+    this.accel_option = [
+      '50',
+      '500',
+      '1000',
+      '1500',
+      '2000',
+      '2500',
+      '3000',
+      '3500',
+      '4000',
+      '5000',
+      '6000',
+      '8000'
+    ];
+
+    // available speed values
+    this.speed_option = [
+      '1000',
+      '1500',
+      '2000',
+      '2500',
+      '3000',
+      '4000',
+      '6000',
+      '8000',
+      '9000',
+      '10000',
+      '11000',
+      '12000'
+    ];
+
     this.handleChangePort = this.handleChangePort.bind(this);
     this.webviewloaded = this.webviewloaded.bind(this);
 
@@ -96,10 +130,10 @@ class App extends Component {
       // save app parameters
       this.setState({ params: params });
       this.context.setParams(params);
-      console.log ("set locale", params.lang);
+      console.log("set locale", params.lang);
       this.context.SetAppLocale(params.lang);
-      
-      this.setState({theme:params.theme});
+
+      this.setState({ theme: params.theme });
 
     }
 
@@ -260,14 +294,13 @@ class App extends Component {
      *\brief Theme select calback. Apply theme and save parameters
      *
      */
-  async handleChangeTheme (evt)
-  {
+  async handleChangeTheme(evt) {
     let param = {
       ...this.context.Params,
       theme: evt.target.value
     };
     this.context.SetOption(param);
-    this.setState({theme:evt.target.value});
+    this.setState({ theme: evt.target.value });
   }
 
   /*!
@@ -315,7 +348,7 @@ class App extends Component {
             TestBrailleRAP
           </h1>
           <h2>Version:{`${process.env.REACT_APP_VERSION}`}</h2>
-          <p className='labelelm'>theme: {this.state.theme}</p>
+          
         </div>
 
         <div className='lg:flex'>
@@ -487,19 +520,15 @@ class App extends Component {
             id="selectspeed"
             name="selectspeed"
             disabled={!this.state.connected}>
-            <option value='1000'>1000</option>
-            <option value='1500'>1500</option>
-            <option value='2000'>2000</option>
-            <option value='2500'>2500</option>
-            <option value='3000'>3000</option>
-            <option value='4000'>4000</option>
-            <option value='5000'>5000</option>
-            <option value='6000'>6000</option>
-            <option value='8000'>8000</option>
-            <option value='9000'>9000</option>
-            <option value='10000'>10000</option>
-            <option value='11000'>11000</option>
-            <option value='12000'>12000</option>
+            {
+              this.speed_option.map((speed) => {
+                if (speed === this.state.speed)
+                  return (<option aria-selected={true} value={speed}>{speed} </option>);
+                else
+                  return (<option aria-selected={false} value={speed}>{speed} </option>);
+              })
+            }
+
           </select>
 
           <label className='labelelm'
@@ -513,26 +542,16 @@ class App extends Component {
             id="selectaccel"
             name="selectaccel"
             disabled={!this.state.connected}>
-            <option value='50'>50</option>
-            <option value='500'>500</option>
-            <option value='1000'>1000</option>
-            <option value='1500'>1500</option>
-            <option value='2000'>2000</option>
-            <option value='2500'>2500</option>
-            <option value='3000'>3000</option>
-            <option value='3500'>3500</option>
-            <option value='4000'>4000</option>
-            <option value='5000'>5000</option>
-            <option value='6000'>6000</option>
-            <option value='8000'>8000</option>
-            <option value='9000'>9000</option>
-            <option value='10000'>10000</option>
-            <option value='11000'>11000</option>
-            <option value='12000'>12000</option>
-            <option value='13000'>13000</option>
-            <option value='14000'>14000</option>
-            <option value='15000'>15000</option>
-            <option value='15000'>16000</option>
+              {
+              this.accel_option.map((accel) => {
+                if (accel === this.state.accel)
+                  return (<option aria-selected={true} value={accel}>{accel} </option>);
+                else
+                  return (<option aria-selected={false} value={accel}>{accel} </option>);
+              })
+            }
+
+            
           </select>
 
 
@@ -548,7 +567,8 @@ class App extends Component {
 
           </button>
         </div>
-        <div>
+        <div >
+          
           <hr className='hseparator' />
         </div>
         <div className='lg:flex'>
