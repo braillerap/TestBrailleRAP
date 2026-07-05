@@ -22,6 +22,8 @@
     "param.send-gcode":"Envoyer une commande GCODE",
     
     "param.theme": "Theme",
+    "param.tests": "Fichier de test",
+    "param.runtest":"Exécuter le test",
 
     "param.comportrefreshed": "Ports de communications actualisés",
     

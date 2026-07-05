@@ -1,5 +1,6 @@
 
 class BackendPyWebview {
+    
     /*!
      *\brief Display a confirmation dialog
      *
@@ -13,6 +14,8 @@ class BackendPyWebview {
         else
             return false;
     }
+
+    
 
     /*!
      *\brief Read application parameters file
@@ -109,6 +112,37 @@ class BackendPyWebview {
     }
 
     /*!
+     *\brief Return a  GCODE test scenario
+     *
+     */
+    async get_gcode_test (test)
+    {
+        console.log (test);
+        let gcode = await window.pywebview.api.get_gcode_test (test);
+        console.log (gcode);
+        return (gcode);
+    }
+
+    /*!
+     *\brief Return a list of GCODE test scenario
+     *
+     */
+    async get_gcode_test_list ()
+    {
+        return await window.pywebview.api.get_gcode_test_list ();
+    }
+
+    
+    /*!
+     *\brief Send gcode to the connected device
+     *
+     */
+    async print_gcode (gcode)
+    {
+        return await window.pywebview.api.PrintGcode (gcode);
+    }
+
+    /*!
      *\brief Request application exit
      *
      */
@@ -125,6 +159,8 @@ class Backend {
         // build a pywebview backend
         this.backend = new BackendPyWebview();
     }
+
+    
 
     /*!
      *\brief Return backend status
@@ -157,18 +193,7 @@ class Backend {
         return null;
     }
 
-     /*!
-     *\brief Write application parameters file
-     *
-     */
-    writeAppParameters (opt)
-    {
-        if (this.backendready)
-        {
-            this.backend.writeAppParameters(opt);
-            
-        }
-    }
+     
 
      /*!
      *\brief Get serial communication port list
@@ -192,7 +217,6 @@ class Backend {
             let ret = await this.backend.confirm_dialog(title, message);
             console.log ("return from backend confirm_dialog: ", ret)
             return ret;
-            
         }
     }
 
@@ -209,16 +233,31 @@ class Backend {
     }
 
     /*!
-     *\brief Open a serial communication port
+     *\brief Return a  GCODE test scenario
      *
      */
-    async gcode_open (port)
+    async get_gcode_test (name)
     {
         if (this.backendready)
-            return await this.backend.gcode_open (port);
-        return -1;
+            return await this.backend.get_gcode_test(name);
+
+        return "";
     }
+
+    /*!
+     *\brief Return a list of GCODE test scenario
+     *
+     */
+    async get_gcode_test_list ()
+    {
+        if (this.backendready)
+            return await this.backend.get_gcode_test_list();
+
+        return [];
+    }
+
     
+
     /*!
      *\brief Run a M119 (enstop status) on the connected BrailleRAP
      *
@@ -241,6 +280,19 @@ class Backend {
             return await this.backend.gcode_M3(s);
         return '';
     }
+
+    /*!
+     *\brief Open a serial communication port
+     *
+     */
+    async gcode_open (port)
+    {
+        if (this.backendready)
+            return await this.backend.gcode_open (port);
+        return -1;
+    }
+    
+    
 
     /*!
      *\brief Run a relative move command on the connected BrailleRAP
@@ -276,15 +328,14 @@ class Backend {
     }
     
     /*!
-     *\brief Display a confirmation dialog
+     *\brief Send gcode to the connected device
      *
      */
-    async confirm_dialog (title, message)
+    async gcode_print (gcode)
     {
         if (this.backendready)
-            return await this.backend.confirm_dialog (title, message);
-
-        return false;
+            return await this.backend.print_gcode (gcode);
+        return '';
     }
     
     /*!
@@ -297,6 +348,18 @@ class Backend {
             this.backend.quit ();
     }
     
+    /*!
+     *\brief Write application parameters file
+     *
+     */
+    writeAppParameters (opt)
+    {
+        if (this.backendready)
+        {
+            this.backend.writeAppParameters(opt);
+            
+        }
+    }
 }
 
 export default Backend;

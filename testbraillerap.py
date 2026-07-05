@@ -9,6 +9,7 @@ import serial.tools.list_ports
 import time
 from pathlib import Path
 from gcode import GCodeDevice
+from gcode import GCodeTests
 
 rpi = False
 COM_TIMEOUT =   5  #Communication timeout with device controller (Marlin)
@@ -78,6 +79,7 @@ def load_parameters():
 class Api:
     def __init__ (self):
         self.gcode = GCodeDevice.GCodeDevice()
+        self.gtests = GCodeTests.GCodeTests ()
 
     def openCom (self, port):
         ret = self.gcode.openCom (port)
@@ -110,17 +112,23 @@ class Api:
         ret = self.gcode.G28(axis)
         print (ret)
         return ret
-
+    
+    def get_gcode_test_list (self):
+        return self.gtests.getList()
+    
+    def get_gcode_test (self, testname):
+        test = ""
+        try:
+            print ("request test gcode:", testname)
+            test = self.gtests.getTest (testname);
+            print (test)
+        except Exception as e:
+            print(e)
+        return test
+    
     def fullscreen(self):
         """toggle main window fullscreen"""
         webview.windows[0].toggle_fullscreen()
-
-    
-    def remove_comment(self, string):
-        """Remove comments from GCode if any"""
-        if string.find(';') == -1:
-            return string
-        return string[:string.index(';')]
     
     def set_window(self, window):
         self._window = window
@@ -133,12 +141,6 @@ class Api:
         """Get parameters value"""
         js = json.dumps(app_options)
         print ("backend get parameters: ", js)
-        return js
-
-    def get_runtime_options(self):
-        """ Get runtime options value """
-        js = json.dumps(run_options)
-        print ("backend get runtime options: ", js)
         return js
 
     def gcode_set_parameters(self, opt):
@@ -168,64 +170,8 @@ class Api:
         except Exception as e:
             print(e)
 
-    def PrintGcode(self, gcode, comport):
-        global serial_status, cancel_print
-        print("Opening Serial Port", comport)
-        try:
-            cancel_print = False
-            if serial_status == SerialStatus.Busy:
-                print("Printer busy")
-                return "Print in progress :"
-
-            serial_status = SerialStatus.Busy
-            with serial.Serial(comport, 250000, timeout=2, write_timeout=2) as Printer:
-                print(comport, "is open")
-
-                # Hit enter a few times to wake up
-                #print(comport, "cleanup")                
-                Printer.write(str.encode("\r\n\r\n"))   #cleanup
-                
-                time.sleep(1) # Wait for initialization
-                Printer.flushInput()  # Flush startup text in serial input
-                #print("Sending GCode")
-                gcodelines = gcode.split("\r\n")
-                for line in gcodelines:
-                    cmd_gcode = self.remove_comment(line)
-                    cmd_gcode = (
-                        cmd_gcode.strip()
-                    )  # Strip all EOL characters for streaming
-                    if cmd_gcode.isspace() is False and len(cmd_gcode) > 0:
-                        print("Sending: " + cmd_gcode)
-                        Printer.write(
-                            cmd_gcode.encode() + str.encode("\n")
-                        )  # Send g-code block
-                        # Wait for response with carriage return
-                        tbegin = time.time()
-                        while True:
-                            grbl_out = Printer.readline()
-                            print(grbl_out.strip().decode("utf-8"))
-                            if str.encode("ok") in grbl_out:
-                                break
-                            if len(grbl_out) > 0:
-                                tbegin = time.time()
-                            if time.time() - tbegin > COM_TIMEOUT:
-                                raise Exception("Timeout in printer communication")
-
-                    if cancel_print:
-                        Printer.write(
-                            str.encode("M84;\n") # disable motor
-                        )  
-                        Printer.readline()
-                        break
-                print("End of printing")
-                Printer.close()
-        except Exception as e:
-            print(e)
-            serial_status = SerialStatus.Ready
-            return "Erreur d'impression :" + str(e)
-
-        serial_status = SerialStatus.Ready
-        return " "
+    def PrintGcode(self, gcode):
+        return self.gcode.PrintGcode(gcode)
 
     def CancelPrint(self):
         global cancel_print

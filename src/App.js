@@ -57,7 +57,9 @@ class App extends Component {
         accel: 1500,
         theme: "normal",
         comevent: "",
-        localedata: []
+        localedata: [],
+        gcodetest: "",
+        gcode_test_list: []
       }
     );
 
@@ -93,6 +95,8 @@ class App extends Component {
       '12000'
     ];
 
+    
+
     this.handleChangePort = this.handleChangePort.bind(this);
     this.webviewloaded = this.webviewloaded.bind(this);
 
@@ -110,7 +114,7 @@ class App extends Component {
     this.handleRefreshPort = this.handleRefreshPort.bind(this);
     this.handleOpenCom = this.handleOpenCom.bind(this);
     this.handleQuit = this.handleQuit.bind(this);
-
+    this.handleRunTest = this.handleRunTest.bind(this);
 
   }
 
@@ -145,6 +149,12 @@ class App extends Component {
       this.setState({ listport: portinfo })
     }
 
+    // Get gcode test files list
+    let test_list = await this.context.GetBackend().get_gcode_test_list (); 
+    console.log (test_list);
+    this.setState ({gcode_test_list:test_list});
+    if (test_list.length > 0)
+      this.setState({gcodetest:test_list[0]});
   }
 
   async componentDidMount() {
@@ -177,6 +187,50 @@ class App extends Component {
 
   voidfunc() {
 
+  }
+
+  /*!
+     *\brief Change acceleration select callback. Change the acceleration ramp when moving the BrailleRAP head.
+     *
+     */
+  async handleChangeAcc(evt) {
+    this.context.GetBackend().gcode_set_accel(evt.target.value);
+    this.setState({ accel: evt.target.value });
+  }
+
+  /*!
+     *\brief Change language select callback. Change the Application locale and save parameters.
+     *
+     */
+  handleChangeLanguage(evt) {
+    let param = {
+      ...this.context.Params,
+      lang: evt.target.value
+    };
+    this.context.SetOption(param);
+    this.context.SetAppLocale(evt.target.value);
+  }
+
+  /*!
+     *\brief Change speed select callback. Change the moving speed of the BrailleRAP
+     *
+     */
+  async handleChangeSpeed(evt) {
+    this.context.GetBackend().gcode_set_speed(evt.target.value);
+    this.setState({ speed: evt.target.value });
+  }
+
+  /*!
+     *\brief Theme select calback. Apply theme and save parameters
+     *
+     */
+  async handleChangeTheme(evt) {
+    let param = {
+      ...this.context.Params,
+      theme: evt.target.value
+    };
+    this.context.SetOption(param);
+    this.setState({ theme: evt.target.value });
   }
 
   /*!
@@ -257,54 +311,16 @@ class App extends Component {
     }
   }
 
-  /*!
-     *\brief Change acceleration select callback. Change the acceleration ramp when moving the BrailleRAP head.
-     *
-     */
-  async handleChangeAcc(evt) {
-    this.context.GetBackend().gcode_set_accel(evt.target.value);
-    this.setState({ accel: evt.target.value });
+  async handleRunTest ()
+  {
+    console.log ("gcode", this.state.gcodetest);
+    let test = await this.context.GetBackend().get_gcode_test (this.state.gcodetest);
+    await this.context.GetBackend().gcode_print (test);
   }
+  
 
   /*!
-     *\brief Change language select callback. Change the Application locale and save parameters.
-     *
-     */
-  handleChangeLanguage(evt) {
-    let param = {
-      ...this.context.Params,
-      lang: evt.target.value
-    };
-    this.context.SetOption(param);
-    this.context.SetAppLocale(evt.target.value);
-  }
-
-  /*!
-     *\brief Change speed select callback. Change the moving speed of the BrailleRAP
-     *
-     */
-  async handleChangeSpeed(evt) {
-    console.log(evt);
-    console.log(evt.target.value);
-    this.context.GetBackend().gcode_set_speed(evt.target.value);
-    this.setState({ speed: evt.target.value });
-  }
-
-  /*!
-     *\brief Theme select calback. Apply theme and save parameters
-     *
-     */
-  async handleChangeTheme(evt) {
-    let param = {
-      ...this.context.Params,
-      theme: evt.target.value
-    };
-    this.context.SetOption(param);
-    this.setState({ theme: evt.target.value });
-  }
-
-  /*!
-     *\brief Move button calback. Relative move the BrailleRAP head in desired x,y direction 
+     *\brief Move button callback. Relative move the BrailleRAP head in desired x,y direction 
      *
      */
   async handleMove(x, y) {
@@ -558,7 +574,8 @@ class App extends Component {
         </div>
 
 
-        <div className='flex'>
+        <div className='lg:flex lg:justify-evenly'>
+          <div>
           <input type="text" className='textedit'></input>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
@@ -566,6 +583,34 @@ class App extends Component {
             {this.context.GetLocaleString("param.send-gcode")}
 
           </button>
+           </div> 
+           <div>
+          <label className='labelelm'
+              htmlFor='testselect'
+            >
+              {this.context.GetLocaleString("param.tests")}
+            </label>
+            <select className='select'
+              disabled={! this.state.connected}
+              name="testselect" id="testselect"
+              onChange={(evt)=>{this.setState({gcodetest:evt.target.value})}}
+              value={this.state.gcodetest}
+            >
+              {this.state.gcode_test_list.map ( (test)=> {
+                  if (this.gcodetest === test)
+                    return (<option aria-selected={true}  value={test}>{test}</option>);
+                  else
+                    return (<option aria-selected={false} value={test}>{test}</option>);
+                
+              })}
+            </select>
+             <button className="btn btn-blue"
+            disabled={!this.state.connected}
+            onClick={this.handleRunTest}>
+            {this.context.GetLocaleString("param.runtest")}
+
+          </button>
+        </div>
         </div>
         <div >
           

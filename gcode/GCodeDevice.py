@@ -104,3 +104,60 @@ class GCodeDevice :
 
         str = self.read ()
         return str
+    
+    def remove_comment(self, gcode):
+        """Remove comments from GCode line if any"""
+        if gcode.find(';') == -1:
+            return gcode
+        return gcode[:gcode.index(';')]
+    
+    def PrintGcode (self, gcode):
+        global cancel_print
+        try:
+            cancel_print = False
+           
+
+            # Hit enter a few times to wake up          
+            self.hwport.write(str.encode("\r\n\r\n"))   #cleanup
+            
+            time.sleep(1) # Wait for initialization
+            self.hwport.flushInput()  # Flush startup text in serial input
+            
+            gcodelines = gcode.split("\r\n")
+            for line in gcodelines:
+                cmd_gcode = self.remove_comment(line)
+                cmd_gcode = (
+                    cmd_gcode.strip()
+                )  # Strip all EOL characters for streaming
+                if cmd_gcode.isspace() is False and len(cmd_gcode) > 0:
+                    print("Sending: " + cmd_gcode)
+                    self.hwport.write(
+                        cmd_gcode.encode() + str.encode("\n")
+                    )  # Send g-code block
+                    # Wait for response with carriage return
+                    tbegin = time.time()
+                    while True:
+                        grbl_out = self.hwport.readline()
+                        print(grbl_out.strip().decode("utf-8"))
+                        if str.encode("ok") in grbl_out:
+                            break
+                        if len(grbl_out) > 0:
+                            tbegin = time.time()
+                        if time.time() - tbegin > COM_TIMEOUT:
+                            raise Exception("Timeout in printer communication")
+
+                if cancel_print:
+                    self.hwport.write(
+                        str.encode("M84;\n") # disable motor
+                    )  
+                    self.hwport.readline()
+                    break
+
+                print("End of printing")
+                
+        except Exception as e:
+            print(e)
+            
+            return "Erreur d'impression :" + str(e)
+        
+        return " "
