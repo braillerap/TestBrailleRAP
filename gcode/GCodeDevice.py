@@ -123,8 +123,10 @@ class GCodeDevice :
             time.sleep(1) # Wait for initialization
             self.hwport.flushInput()  # Flush startup text in serial input
             
-            gcodelines = gcode.split("\r\n")
+            gcodelines = gcode.splitlines()
+            print ("split", len(gcodelines))
             for line in gcodelines:
+                
                 cmd_gcode = self.remove_comment(line)
                 cmd_gcode = (
                     cmd_gcode.strip()
