@@ -134,7 +134,6 @@ class Api:
         self._window = window
 
     def quit(self):
-        print ("quit request")
         self._window.destroy()
 
     def get_parameters(self):

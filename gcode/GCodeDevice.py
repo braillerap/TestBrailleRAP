@@ -40,36 +40,53 @@ class GCodeDevice :
         return gcode_out
     
     def G28 (self, axis):
-        for a in axis:
-            if (a == 'x'):
-                self.hwport.write ("G28 X\r\n".encode())
-            if (a == 'y'):
-                self.hwport.write ("G28 Y\r\n".encode())
-            str = self.read ()
-        return str
+        try:
+
+            for a in axis:
+                if (a == 'x'):
+                    self.hwport.write ("G28 X\r\n".encode())
+                if (a == 'y'):
+                    self.hwport.write ("G28 Y\r\n".encode())
+                str = self.read ()
+            return str
+        except Exception as e:
+            print ("Exception raised", repr(e))
+            return repr(e)
     
    
     def M3 (self, s):
-        str = "M3 S{0}\r\n".format (s)
-        self.hwport.write (str.encode())
-        str = self.read ()
-        return str
+        try:
+            str = "M3 S{0}\r\n".format (s)
+            self.hwport.write (str.encode())
+            str = self.read ()
+            return str
+        except Exception as e:
+            print ("Exception raised", repr(e))
+            return repr(e)
 
     def MoveRel (self, x, y):
         str = "G91\r\n"
         str += "G1 X{0} Y{1}\r\n".format(x,y)
         str += "G90\r\n"   
-
-        self.hwport.write (str.encode())
-        str = self.read ()
-        return str
+        
+        try:
+            self.hwport.write (str.encode())
+            str = self.read ()
+            return str
+        except Exception as e:
+            print ("Exception raised", repr(e))
+            return repr(e)
 
     def setSpeed (self, speed):
-        str = "G1 F{0}\r\n".format(speed)
-        self.hwport.write (str.encode ())
+        try:
+            str = "G1 F{0}\r\n".format(speed)
+            self.hwport.write (str.encode ())
 
-        str = self.read ()
-        return str
+            str = self.read ()
+            return str
+        except Exception as e:
+            print ("Exception raised", repr(e))
+            return repr(e)
     
     def M119 (self): #endstop status
         try:
@@ -99,11 +116,15 @@ class GCodeDevice :
             return None
         
     def M204(self, accel):
-        str = "M204 T{0}\r\n".format (accel)
-        self.hwport.write (str.encode ())
+        try:
+            str = "M204 T{0}\r\n".format (accel)
+            self.hwport.write (str.encode ())
 
-        str = self.read ()
-        return str
+            str = self.read ()
+            return str
+        except Exception as e:
+            print ("Exception raised", repr(e))
+            return repr(e)
     
     def remove_comment(self, gcode):
         """Remove comments from GCode line if any"""
