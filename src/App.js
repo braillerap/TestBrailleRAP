@@ -38,7 +38,7 @@
 import { Component } from 'react';
 import AppOption from "./components/AppOption";
 import AppContext from "./components/AppContext";
-
+import MoveDevice from "./components/MoveDevice";
 
 
 class App extends Component {
@@ -95,7 +95,7 @@ class App extends Component {
       '12000'
     ];
 
-    
+
 
     this.handleChangePort = this.handleChangePort.bind(this);
     this.webviewloaded = this.webviewloaded.bind(this);
@@ -111,9 +111,11 @@ class App extends Component {
     this.handleEmboss = this.handleEmboss.bind(this);
     this.handleHome = this.handleHome.bind(this);
     this.handleLimitStatus = this.handleLimitStatus.bind(this);
-    this.handleRefreshPort = this.handleRefreshPort.bind(this);
+    this.handleMove = this.handleMove.bind(this);
+
     this.handleOpenCom = this.handleOpenCom.bind(this);
     this.handleQuit = this.handleQuit.bind(this);
+    this.handleRefreshPort = this.handleRefreshPort.bind(this);
     this.handleRunTest = this.handleRunTest.bind(this);
 
   }
@@ -150,11 +152,11 @@ class App extends Component {
     }
 
     // Get gcode test files list
-    let test_list = await this.context.GetBackend().get_gcode_test_list (); 
-    console.log (test_list);
-    this.setState ({gcode_test_list:test_list});
+    let test_list = await this.context.GetBackend().get_gcode_test_list();
+    console.log(test_list);
+    this.setState({ gcode_test_list: test_list });
     if (test_list.length > 0)
-      this.setState({gcodetest:test_list[0]});
+      this.setState({ gcodetest: test_list[0] });
   }
 
   async componentDidMount() {
@@ -311,13 +313,12 @@ class App extends Component {
     }
   }
 
-  async handleRunTest ()
-  {
-    console.log ("gcode", this.state.gcodetest);
-    let test = await this.context.GetBackend().get_gcode_test (this.state.gcodetest);
-    await this.context.GetBackend().gcode_print (test);
+  async handleRunTest() {
+    console.log("gcode", this.state.gcodetest);
+    let test = await this.context.GetBackend().get_gcode_test(this.state.gcodetest);
+    await this.context.GetBackend().gcode_print(test);
   }
-  
+
 
   /*!
      *\brief Move button callback. Relative move the BrailleRAP head in desired x,y direction 
@@ -364,7 +365,7 @@ class App extends Component {
             TestBrailleRAP
           </h1>
           <h2>Version:{`${process.env.REACT_APP_VERSION}`}</h2>
-          
+
         </div>
 
         <div className='lg:flex'>
@@ -446,83 +447,12 @@ class App extends Component {
 
           </button>
         </div>
-        <div className="centralgrid">
-          <div className=""></div>
-          <div className=""></div>
-          <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={() => { this.handleMove(0, +10) }}>
-
-            Y++
-          </button>
-          <div className=""></div>
-          <div className=""></div>
-          <div className=""></div>
-          <div className=""></div>
-          <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={() => { this.handleMove(0, +1) }}>
-
-            Y+
-          </button>
-          <div className=""></div>
-          <div className=""></div>
-
-          <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={() => { this.handleMove(-10, 0) }}>
-
-            X--
-          </button>
-          <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={() => { this.handleMove(-1, 0) }}>
-
-            X-
-          </button>
-
-          <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={() => { this.handleEmboss() }}>
-            {this.context.GetLocaleString("param.makedot")}
-
-          </button>
-
-          <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={() => { this.handleMove(1, 0) }}>
-
-            X+
-          </button>
-          <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={() => { this.handleMove(10, 0) }}>
-
-            X++
-          </button>
-
-          <div className=""></div>
-
-          <div className=""></div>
-          <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={() => { this.handleMove(0, -1) }}>
-
-            Y-
-          </button>
-          <div className="">  </div>
-          <div className="">  </div>
-          <div className=""></div>
-          <div className=""></div>
-          <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={() => { this.handleMove(0, -10) }}>
-
-            Y--
-          </button>
-          <div className="">  </div>
-          <div className="">  </div>
-        </div>
+        <MoveDevice 
+          connected={this.state.connected}
+          onMove={this.handleMove}
+          onEmboss = {this.handleEmboss}
+          />
+        
         <div className='flex'>
 
 
@@ -558,7 +488,7 @@ class App extends Component {
             id="selectaccel"
             name="selectaccel"
             disabled={!this.state.connected}>
-              {
+            {
               this.accel_option.map((accel) => {
                 if (accel === this.state.accel)
                   return (<option aria-selected={true} value={accel}>{accel} </option>);
@@ -567,7 +497,7 @@ class App extends Component {
               })
             }
 
-            
+
           </select>
 
 
@@ -576,44 +506,44 @@ class App extends Component {
 
         <div className='lg:flex lg:justify-evenly'>
           <div>
-          <input type="text" className='textedit'></input>
-          <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={this.voidfunc}>
-            {this.context.GetLocaleString("param.send-gcode")}
+            <input type="text" className='textedit'></input>
+            <button className="btn btn-blue"
+              disabled={!this.state.connected}
+              onClick={this.voidfunc}>
+              {this.context.GetLocaleString("param.send-gcode")}
 
-          </button>
-           </div> 
-           <div>
-          <label className='labelelm'
+            </button>
+          </div>
+          <div>
+            <label className='labelelm'
               htmlFor='testselect'
             >
               {this.context.GetLocaleString("param.tests")}
             </label>
             <select className='select'
-              disabled={! this.state.connected}
+              disabled={!this.state.connected}
               name="testselect" id="testselect"
-              onChange={(evt)=>{this.setState({gcodetest:evt.target.value})}}
+              onChange={(evt) => { this.setState({ gcodetest: evt.target.value }) }}
               value={this.state.gcodetest}
             >
-              {this.state.gcode_test_list.map ( (test)=> {
-                  if (this.gcodetest === test)
-                    return (<option aria-selected={true}  value={test}>{test}</option>);
-                  else
-                    return (<option aria-selected={false} value={test}>{test}</option>);
-                
+              {this.state.gcode_test_list.map((test) => {
+                if (this.gcodetest === test)
+                  return (<option aria-selected={true} value={test}>{test}</option>);
+                else
+                  return (<option aria-selected={false} value={test}>{test}</option>);
+
               })}
             </select>
-             <button className="btn btn-blue"
-            disabled={!this.state.connected}
-            onClick={this.handleRunTest}>
-            {this.context.GetLocaleString("param.runtest")}
+            <button className="btn btn-blue"
+              disabled={!this.state.connected}
+              onClick={this.handleRunTest}>
+              {this.context.GetLocaleString("param.runtest")}
 
-          </button>
-        </div>
+            </button>
+          </div>
         </div>
         <div >
-          
+
           <hr className='hseparator' />
         </div>
         <div className='lg:flex'>
