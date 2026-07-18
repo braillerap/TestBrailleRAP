@@ -35,7 +35,7 @@
  * 
  * SPDX-License-Identifier: GPL-3.0 
  */
-import { Component } from 'react';
+import React, { Component } from 'react';
 import AppOption from "./components/AppOption";
 import AppContext from "./components/AppContext";
 import MoveDevice from "./components/MoveDevice";
@@ -59,7 +59,10 @@ class App extends Component {
         comevent: "",
         localedata: [],
         gcodetest: "",
-        gcode_test_list: []
+        gcodecmd: "",
+        gcode_test_list: [],
+        serialdata: ''
+
       }
     );
 
@@ -117,7 +120,10 @@ class App extends Component {
     this.handleQuit = this.handleQuit.bind(this);
     this.handleRefreshPort = this.handleRefreshPort.bind(this);
     this.handleRunTest = this.handleRunTest.bind(this);
+    this.handleSendGCode = this.handleSendGCode.bind(this);
 
+
+    this.serialdataref = React.createRef();
   }
 
   async webviewloaded() {
@@ -319,6 +325,16 @@ class App extends Component {
     await this.context.GetBackend().gcode_print(test);
   }
 
+  async handleSendGCode() {
+    console.log("gcode", this.state.gcodecmd);
+    let ret = await this.context.GetBackend().gcode_send_cmd(this.state.gcodecmd);
+    console.log(ret);
+    this.setState({ serialdata: this.state.serialdata + ret });
+    if (this.serialdataref) {
+      // scroll to end
+      this.serialdataref.current.scrollTop = this.serialdataref.current.scrollHeight + 1;
+    }
+  }
 
   /*!
      *\brief Move button callback. Relative move the BrailleRAP head in desired x,y direction 
@@ -447,15 +463,38 @@ class App extends Component {
 
           </button>
         </div>
-        <MoveDevice 
-          connected={this.state.connected}
-          onMove={this.handleMove}
-          onEmboss = {this.handleEmboss}
+        <div className='lg:flex lg:flex-row'>
+          <MoveDevice
+            connected={this.state.connected}
+            onMove={this.handleMove}
+            onEmboss={this.handleEmboss}
           />
+
+
+          <div className='flex flex-col'>
+            <div
+              className='border whitespace-pre-line min-h-48 max-h-48 overflow-y-scroll '
+              ref={this.serialdataref}
+            >{this.state.serialdata}</div>
+            <div>
+              <input type="text" className='textedit'
+                value={this.state.gcodecmd}
+                onChange={(evt) => { this.setState({ gcodecmd: evt.target.value }) }}
+              ></input>
+              <button className="btn btn-blue"
+                disabled={!this.state.connected}
+                onClick={this.handleSendGCode}>
+                {this.context.GetLocaleString("param.send-gcode")}
+
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <hr className='hseparator' />
         
-        <div className='flex'>
-
-
+        <div className='lg:flex lg:justify-items-start'>
+          <div>
           <label className='labelelm'
             htmlFor='selectspeed'>
             {this.context.GetLocaleString("param.speed")}:
@@ -476,7 +515,8 @@ class App extends Component {
             }
 
           </select>
-
+            </div>
+            <div>
           <label className='labelelm'
             htmlFor='selectaccel'>
             {this.context.GetLocaleString("param.accel")}:
@@ -500,20 +540,9 @@ class App extends Component {
 
           </select>
 
+            </div>
+        
 
-        </div>
-
-
-        <div className='lg:flex lg:justify-evenly'>
-          <div>
-            <input type="text" className='textedit'></input>
-            <button className="btn btn-blue"
-              disabled={!this.state.connected}
-              onClick={this.voidfunc}>
-              {this.context.GetLocaleString("param.send-gcode")}
-
-            </button>
-          </div>
           <div>
             <label className='labelelm'
               htmlFor='testselect'

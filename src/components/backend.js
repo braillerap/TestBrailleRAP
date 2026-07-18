@@ -102,6 +102,15 @@ class BackendPyWebview {
     }
 
     /*!
+     *\brief Send a single gcode command to the connected device
+     *
+     */
+    async gcode_send_cmd (gcode)
+    {
+        return await window.pywebview.api.SendGcode (gcode);
+    }
+
+    /*!
      *\brief Run a homing reference course for selected axis on the connected BrailleRAP
      *
      */
@@ -328,7 +337,17 @@ class Backend {
     }
     
     /*!
-     *\brief Send gcode to the connected device
+     *\brief Send a single gcode command to the connected device
+     *
+     */
+    async gcode_send_cmd (gcode)
+    {
+        if (this.backendready)
+            return await this.backend.gcode_send_cmd (gcode);
+        return '';
+    }
+    /*!
+     *\brief Send gcode file to the connected device
      *
      */
     async gcode_print (gcode)

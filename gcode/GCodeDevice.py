@@ -132,6 +132,15 @@ class GCodeDevice :
             return gcode
         return gcode[:gcode.index(';')]
     
+    def SendGcode (self, gcode):
+        try:
+            self.hwport.write (gcode.encode ())
+
+            ret = self.read ()
+            return ret + "\r\n"
+        except Exception as e:
+            return str(e) + "\r\n"
+
     def PrintGcode (self, gcode):
         global cancel_print
         try:

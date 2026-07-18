@@ -36,7 +36,7 @@
  * 
  * SPDX-License-Identifier: GPL-3.0 
  */
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import AppContext from "../components/AppContext";
 
 const MoveDevice = ({ connected, onMove, onEmboss}) => {

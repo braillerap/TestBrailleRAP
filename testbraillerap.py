@@ -171,7 +171,10 @@ class Api:
 
     def PrintGcode(self, gcode):
         return self.gcode.PrintGcode(gcode)
-
+    
+    def SendGcode (self, gcode):
+        return self.gcode.SendGcode (gcode)
+    
     def CancelPrint(self):
         global cancel_print
         cancel_print = True
