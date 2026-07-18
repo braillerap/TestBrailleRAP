@@ -377,7 +377,7 @@ class App extends Component {
       <div className={this.state.theme + " App"}>
 
         <div className='min-w-80 mx-auto text-center' >
-          <h1 className="text-3xl font-bold">
+          <h1 className="text-xl md:text-3xl font-bold">
             TestBrailleRAP
           </h1>
           <h2>Version:{`${process.env.REACT_APP_VERSION}`}</h2>
