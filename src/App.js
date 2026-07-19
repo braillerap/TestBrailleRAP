@@ -441,7 +441,7 @@ class App extends Component {
 
           </button>
           {this.GetLimitStatus('X', this.state.limitx)}
-          {this.GetLimitStatus('Y (Paper)', this.state.limity)}
+          {this.GetLimitStatus(this.context.GetLocaleString("param.yaxislabel"), this.state.limity)}
         </div>
         <div className='flex'>
           <button className="btn btn-blue"

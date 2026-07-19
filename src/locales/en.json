@@ -22,7 +22,7 @@
     "param.theme": "Theme",
     "param.tests": "Test files",
     "param.runtest":"Run test",
-    
+    "param.yaxislabel": "Y (Paper)",
    
     "param.theme-normal":"Normal",
     "param.theme-wb":"White on black",

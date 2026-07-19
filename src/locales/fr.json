@@ -24,6 +24,7 @@
     "param.theme": "Theme",
     "param.tests": "Fichier de test",
     "param.runtest":"Exécuter le test",
+    "param.yaxislabel": "Y (Papier)",
 
     "param.comportrefreshed": "Ports de communications actualisés",
     
