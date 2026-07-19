@@ -2,6 +2,8 @@
 
 Testing tool for BrailleRAP device. You can use it to validate a new built BrailleRAP or to diagnose a malfunction
 
+![A screenshot of TestBrailleRAP](./screenshot/screen1.png)
+*A screenshot of TestBrailleRAP*
 
 ## Features
 
@@ -10,6 +12,8 @@ Testing tool for BrailleRAP device. You can use it to validate a new built Brail
 * Endstop display
 * Move axis
 * Activate solenoid
+* Set Speed and Acceleration
+* Run predeterminate test gcode files for validation and diagnostic
 * ...
 
 # Releases
