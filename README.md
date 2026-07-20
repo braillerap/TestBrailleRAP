@@ -27,7 +27,7 @@ If you need the software in your locale language, we will be happy to add a new 
 
 
 ## Code and features
-Feel free to open issues or pull requests ! We will be happy to review and merge your changes. BTW we have a great focus on accessibility and user friendly design
+Feel free to open issues or pull requests ! 
 
 
 # Funding

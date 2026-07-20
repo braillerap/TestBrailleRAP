@@ -47,7 +47,16 @@
     "dpkg-debian13": "dpkg-deb -v --root-owner-group --build ./package/debian/testbraillerap-debian ./dist/testbraillerap-debian13-${npm_package_version}.deb",
     "checkdebian13": "lintian ./dist/testbraillerap-debian13-${npm_package_version}.deb",
     "build-deb-debian13": "npm-run-all mkdirdebian cpdebian clogdebian dpkg-debian13 checkdebian13",
-    "builddebian13": "npm-run-all clean tailwindbuildmini build packagedebian build-deb-debian13"
+    "builddebian13": "npm-run-all clean tailwindbuildmini build packagedebian build-deb-debian13",
+
+    "mkdirubuntu": "mkdir -p ./package/ubuntu/testbraillerap-ubuntu/usr/bin/",
+    "clogubuntu": "git-changelog -x -s v0.0.0 -f `git tag | tail -n 1` | gzip > ./package/ubuntu/testbraillerap-ubuntu/usr/share/doc/testbraillerap-ubuntu/changelog.gz",
+    "cpubuntu": "cp ./dist/testbraillerap-ubuntu ./package/ubuntu/testbraillerap-ubuntu/usr/bin/",
+    "dpkg-ubuntu": "dpkg-deb -v --root-owner-group --build ./package/ubuntu/testbraillerap-ubuntu ./dist/testbraillerap-ubuntu-${npm_package_version}.deb",
+    "checkubuntu": "lintian ./dist/testbraillerap-ubuntu-${npm_package_version}.deb",
+    "build-deb-ubuntu": "npm-run-all mkdirubuntu cpubuntu clogubuntu dpkg-ubuntu checkubuntu",
+    "packageubuntu": "pyinstaller UbuntuTestBrailleRAP.spec",
+    "buildubuntu": "npm-run-all clean tailwindbuildmini build packageubuntu build-deb-ubuntu"
   },
   "eslintConfig": {
     "extends": [
