@@ -1,9 +1,9 @@
 [Desktop Entry]
 Type=Application
 Encoding=UTF-8
-Name=DesktopBrailleRAP
+Name=TestBrailleRAP
 Comment=Braille authoring software for BrailleRAP
-Exec=/usr/bin/desktopbraillerap-ubuntu
+Exec=/usr/bin/testbraillerap-ubuntu
 Terminal=false
-Icon=/usr/share/icons/desktopbraillerap-icon.png
+Icon=/usr/share/icons/testbraillerap-icon.png
 Keywords=braillerap
