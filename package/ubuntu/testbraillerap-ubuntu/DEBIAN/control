@@ -7,5 +7,5 @@ Package-type: binary
 Depends: libc6 (>=2.39-0ubuntu8.0), libc6 (<<2.44), zlib1g
 Architecture: amd64
 Maintainer: Build with love by <contact@braillerap.org>
-Description: Braille authoring tool for BrailleRAP open source embosser.
+Description: Braille testing tool for BrailleRAP open source embosser.
  TestBrailleRAP allow you to control and test a BrailleRAP device.
