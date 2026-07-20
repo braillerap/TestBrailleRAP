@@ -52,7 +52,7 @@
     "mkdirubuntu": "mkdir -p ./package/ubuntu/testbraillerap-ubuntu/usr/bin/",
     "clogubuntu": "git-changelog -x -s v0.0.0 -f `git tag | tail -n 1` | gzip > ./package/ubuntu/testbraillerap-ubuntu/usr/share/doc/testbraillerap-ubuntu/changelog.gz",
     "treeubuntu": "tree -a ./package/ubuntu/testbraillerap-ubuntu",
-    "checktar": "tar -cvzf ./dist/test.gz ./package/ubuntu/testbraillerap-ubuntu",
+    "checktar": "tar -cvzf ./dist/test.gz ./package/ubuntu/testbraillerap-ubuntu/*",
     "cpubuntu": "cp ./dist/testbraillerap-ubuntu ./package/ubuntu/testbraillerap-ubuntu/usr/bin/",
     "dpkg-ubuntu": "dpkg-deb -v --root-owner-group --build ./package/ubuntu/testbraillerap-ubuntu ./dist/testbraillerap-ubuntu-${npm_package_version}.deb",
     "checkubuntu": "lintian ./dist/testbraillerap-ubuntu-${npm_package_version}.deb",
