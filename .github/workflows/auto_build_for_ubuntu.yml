@@ -42,13 +42,13 @@ jobs:
              tag: ${{ github.ref }}
              overwrite: true
              file_glob: true
-             file: ./dist/desktopbraillerap-ubuntu-*
+             file: ./dist/testbraillerap-ubuntu-*
 
      - name: Upload artifact
        uses: actions/upload-artifact@v7
        with: 
-              name: desktopbraillerap-ubuntu
-              path: ./dist/desktopbraillerap-ubuntu-*
+              name: testbraillerap-ubuntu
+              path: ./dist/testbraillerap-ubuntu-*
      
      
               
