@@ -168,7 +168,7 @@ Building TestBrailleRAP from its source code requires a basic understanding of c
     usertest@debiantest:~$TestBrailleRAP-debian &
     ```
 
-    ![TestBrailleRAP screenshot](./screenshot/ubuntu1.png)
+    ![TestBrailleRAP screenshot](./screenshot/screen1.png)
 
 ### 1.3. For Ubuntu 26.04
 
@@ -271,7 +271,7 @@ Building TestBrailleRAP from its source code requires a basic understanding of c
     usertest@ubuntu:~$testbraillerap-ubuntu &
     ```
 
-    ![TestBrailleRAP screenshot](./screenshot/screen1.png)
+    ![TestBrailleRAP screenshot](./screenshot/ubuntu1.png)
 
 
 
