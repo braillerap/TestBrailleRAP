@@ -30,3 +30,5 @@ gcode/__pycache__/GCodeDevice.cpython-312.pyc
 .pyc
 src/index.css
 dist/
+sign.txt
+nsis/TestBrailleRAP_Windows_Setup.exe
