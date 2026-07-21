@@ -7,18 +7,17 @@ Testing tool for BrailleRAP device. You can use it to validate a new built Brail
 
 ## Features
 
-* Connexion / Deconnexion
 * Homing
 * Endstop display
 * Move axis
 * Activate solenoid
 * Set Speed and Acceleration
-* Run predeterminate test gcode files for validation and diagnostic
+* Run test gcode files for validation and diagnostic
 * ...
 
 # Releases
 
-TestBrailleRAP is in active development for now. Pre-built binaries are not yet available
+ We provide pre-built binaries for Windows,  Debian 13 and Ubuntu 26.04. See [releases](https://github.com/BrailleRAP/TestBrailleRAP/releases) for more information.
 
 # Contributing
 
@@ -27,7 +26,7 @@ If you need the software in your locale language, we will be happy to add a new 
 
 
 ## Code and features
-Feel free to open issues or pull requests ! 
+Feel free to open issues or pull requests ! We will be happy to review and merge your changes. Please check the [contributing guide](CONTRIBUTING.md) 
 
 
 # Funding
