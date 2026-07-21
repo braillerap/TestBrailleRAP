@@ -168,7 +168,7 @@ Building TestBrailleRAP from its source code requires a basic understanding of c
     usertest@debiantest:~$TestBrailleRAP-debian &
     ```
 
-    ![TestBrailleRAP screenshot](./screenshot/screen1.png)
+    ![TestBrailleRAP screenshot](./screenshot/ubuntu1.png)
 
 ### 1.3. For Ubuntu 26.04
 
@@ -268,7 +268,7 @@ Building TestBrailleRAP from its source code requires a basic understanding of c
 
 12. **Run TestBrailleRAP**
     ```bash
-    usertest@ubuntu:~$TestBrailleRAP-debian &
+    usertest@ubuntu:~$testbraillerap-ubuntu &
     ```
 
     ![TestBrailleRAP screenshot](./screenshot/screen1.png)
@@ -279,10 +279,11 @@ Building TestBrailleRAP from its source code requires a basic understanding of c
 # Building for Linux using Docker
 You can use Docker configuration to build TestBrailleRAP for a Linux distribution. 
 
-Docker configuration to build TestBrailleRAP for Debian or Ubuntu are available here:
+Docker configuration to build TestBrailleRAP for Debian 13 or Ubuntu 26 are available here:
 
 
-[Debian13](https://github.com/braillerap/BuildTestBrailleRAPDebian13)
+[Debian 13](https://github.com/braillerap/BuildTestBrailleRAPDebian13)
+[Ubuntu 26](https://github.com/braillerap/BuildTestBrailleRAPUbuntu26)
 
  
    
