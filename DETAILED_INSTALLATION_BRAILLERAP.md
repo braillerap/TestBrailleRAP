@@ -170,15 +170,14 @@ Building TestBrailleRAP from its source code requires a basic understanding of c
 
     ![TestBrailleRAP screenshot](./screenshot/screen1.png)
 
-
-### 1.3. For Linux (Debian based systems)
+### 1.3. For Ubuntu 26.04
 
 **Prerequisites:**
 
 * **Python 3 and Python 3 `venv` module.**
 * **Node.js 20.x and npm.**
-* **GCC and general build tools:** `cmake`, `build-essential`, `git`, `ninja-build`, `autoconf`, `gnulib`, `ca-certificates`, `curl`, `gnupg`, `software-properties-common`, `git-extras`, `lintian`.
-* **Additional Python development headers and GTK/WebKit dependencies:** `python3-dev`, `pkg-config`, `gir1.2-gtk-3.0`, `gir1.2-webkit2-4.1`, `python3-tk`, `xvfb`, `libcairo2`, `libcairo2-dev`, `libgirepository1.0-dev`, `tcl`.
+* **GCC and general build tools:** `git-extras`, `lintian`.
+* **Additional Python development headers and GTK/WebKit dependencies:** `python3-pyqt6`, `python3-tk`, `libqt6webchannel6`, `libqt6webview6`.
 
 **Step-by-Step Instructions:**
 
@@ -188,16 +187,15 @@ Building TestBrailleRAP from its source code requires a basic understanding of c
    
    ```bash
    sudo apt update
-   sudo apt install -y python3-venv python3-dev pkg-config gir1.2-gtk-3.0 gir1.2-webkit2-4.1 python3-tk xvfb libcairo2 libcairo2-dev libgirepository1.0-dev tcl cmake build-essential git git-extras ninja-build autoconf gnulib ca-certificates curl gnupg software-properties-common lintian
+   ```
+   ```bash
+   sudo apt install -y git git-extras lintian python3-venv python3-pyqt6 python3-tk libqt6webchannel6 libqt6webview6
    ```
 
 3. **Install Node.js 20.x:**
    
    ```bash
-   curl -sL https://deb.nodesource.com/setup_20.x | sudo bash -
-   sudo apt update
-   sudo apt install -y nodejs
-   sudo npm i npm@latest -g
+   sudo apt install nodejs npm
    ```
 
 4. **Clone the TestBrailleRAP Repository:**
@@ -227,7 +225,7 @@ Building TestBrailleRAP from its source code requires a basic understanding of c
 8. **Install Python Dependencies:**
    
    ```bash
-   pip install -r requirement_linux.txt
+   pip install -r requirement_ubuntu26.txt
    ```
 
 9. **Install Node.js Dependencies:**
@@ -238,41 +236,45 @@ Building TestBrailleRAP from its source code requires a basic understanding of c
 
 10. **Build the Debian Package:** This will create a `.deb` package for easy installation.
     
-    On Debian based
-    ```bash
-    npm run builddebian
-    ```
-    On Ubuntu based
     ```bash
     npm run buildubuntu
     ```
+    
     The compiled `.deb` package will be found in the `dist` folder.
 
-   
 11. **Install the Debian Package:**
     
     ```bash
     sudo dpkg -i <package-name>.deb
     ```
-   
-    (Replace `<package-name>.deb` with the actual file name, e.g., `testbraillerap_0.1.0_amd64.deb`).
+    
+    (Replace `<package-name>.deb` with the actual file name, e.g., `testbraillerap-ubuntu_1.0.0_amd64.deb`).
 
     *(Screenshot: Example of `dpkg` command and successful installation output)*
 
     ```bash
-    sudo dpkg -i ./dist/testbraillerap-debian-0.1.0.deb 
+    sudo dpkg -i ./dist/testbraillerap-ubuntu_0.1.0.deb 
     [sudo] password for usertest: 
-    Selecting previously unselected package testbraillerap-debian.
+    Selecting previously unselected package testbraillerap-ubuntu.
     (Reading database ... 182615 files and directories currently installed.)
-    Preparing to unpack .../testbraillerap-debian-0.1.0.deb ...
-    Unpacking testbraillerap-debian (0.8.1) ...
-    Setting up testbraillerap-debian (0.8.1) ...
+    Preparing to unpack .../testbraillerap-ubuntu-0.1.0.deb ...
+    Unpacking testbraillerap-ubuntu (0.1.0) ...
+    Setting up testbraillerap-ubuntu (0.1.0) ...
     Processing triggers for mailcap (3.74) ...
     Processing triggers for gnome-menus (3.36.0-3) ...
     Processing triggers for desktop-file-utils (0.28-1) ...
-    (venv) usertest@debiantest:~/TestBrailleRAP$
+    (venv) usertest@ubuntu:~/TestBrailleRAP$
     ```
-   
+
+12. **Run TestBrailleRAP**
+    ```bash
+    usertest@ubuntu:~$TestBrailleRAP-debian &
+    ```
+
+    ![TestBrailleRAP screenshot](./screenshot/screen1.png)
+
+
+
 
 # Building for Linux using Docker
 You can use Docker configuration to build TestBrailleRAP for a Linux distribution. 
