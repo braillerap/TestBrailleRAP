@@ -32,11 +32,11 @@ source_suffix = ['.rst', '.md']
 myst_enable_extensions = ["attrs_inline", "html_image"]
 
 master_doc = 'index'
-project = u'DesktopBrailleRAP'
+project = u'TestBrailleRAP'
 copyright = 'GPL V3'
 
-version = '0.10.1'
-release = '0.10.1'
+version = '0.1.1'
+release = '0.1.1'
 exclude_patterns = ['_build']
 default_role = 'obj'
 pygments_style = 'sphinx'
@@ -46,9 +46,9 @@ pygments_style = 'sphinx'
 #    'django': ('http://django.readthedocs.io/en/1.8.x/', None),
 #    'sphinx': ('http://sphinx.readthedocs.io/en/latest/', None),
 #}
-htmlhelp_basename = 'DesktopBrailleRAPdoc'
+htmlhelp_basename = 'TestBrailleRAPdoc'
 latex_documents = [
-    ('index', 'DesktopBrailleRap.tex', u'DesktopBrailleRAP Documentation',
+    ('index', 'TestBrailleRap.tex', u'TestBrailleRAP Documentation',
      u'BrailleRap Team', 'manual'),
 ]
 
@@ -61,7 +61,7 @@ exclude_patterns = [
     # 'api' # needed for ``make gettext`` to not die.
 ]
 
-language = 'fr' 
+language = 'en' 
 
 locale_dirs = [
     'locale/',
@@ -110,7 +110,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'DesktopBrailleRAP.tex', project,
+    (master_doc, 'TestBrailleRAP.tex', project,
      u'BrailleRAP team', 'manual'),
 ]
 
@@ -120,7 +120,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'BrailleRAPman', project,
+    (master_doc, 'TestBrailleRAPman', project,
       u'BrailleRAP team', 1)
 ]
 
@@ -131,8 +131,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'DesktopBrailleRAPtexinfo', project,
-     u'BrailleRAP team', 'DesktopBrailleRAPtexinfo', 'Page composition software for Open source DIY Braille embosser BrailleRAP.',
+    (master_doc, 'TestBrailleRAPtexinfo', project,
+     u'BrailleRAP team', 'TestBrailleRAPtexinfo', 'BrailleRAP device test software.',
      'Miscellaneous'),
 ]
 
