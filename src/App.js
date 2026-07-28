@@ -327,7 +327,7 @@ class App extends Component {
 
   async handleSendGCode() {
     console.log("gcode", this.state.gcodecmd);
-    let ret = await this.context.GetBackend().gcode_send_cmd(this.state.gcodecmd);
+    let ret = await this.context.GetBackend().gcode_send_cmd(this.state.gcodecmd + "\r\n");
     console.log(ret);
     this.setState({ serialdata: this.state.serialdata + ret });
     if (this.serialdataref) {
