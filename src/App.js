@@ -329,11 +329,14 @@ class App extends Component {
     console.log("gcode", this.state.gcodecmd);
     let ret = await this.context.GetBackend().gcode_send_cmd(this.state.gcodecmd + "\r\n");
     console.log(ret);
-    this.setState({ serialdata: this.state.serialdata + ret });
-    if (this.serialdataref) {
-      // scroll to end
-      this.serialdataref.current.scrollTop = this.serialdataref.current.scrollHeight + 1;
-    }
+    this.setState({ serialdata: this.state.serialdata + ">" + this.state.gcodecmd + "\r\n" +ret }, () => {
+        if (this.serialdataref) {
+          // scroll to end
+          this.serialdataref.current.scrollTop = this.serialdataref.current.scrollHeight + 1;
+          console.log ("scroll to end");
+        }
+    });
+    
   }
 
   /*!
@@ -473,7 +476,7 @@ class App extends Component {
 
           <div className='flex flex-col'>
             <div
-              className='border whitespace-pre-line min-h-48 max-h-48 overflow-y-scroll '
+              className='border whitespace-pre-line mx-2 lg:mx-0 max-w-lg min-h-48 max-h-48 overflow-y-scroll'
               ref={this.serialdataref}
             >{this.state.serialdata}</div>
             <div>

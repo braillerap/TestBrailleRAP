@@ -107,7 +107,10 @@ class BackendPyWebview {
      */
     async gcode_send_cmd (gcode)
     {
-        return await window.pywebview.api.SendGcode (gcode);
+        //console.log (gcode);
+        let ret = await window.pywebview.api.SendGcode (gcode);
+        //console.log (ret);
+        return ret;
     }
 
     /*!

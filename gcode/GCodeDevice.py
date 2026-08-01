@@ -137,6 +137,8 @@ class GCodeDevice :
             self.hwport.write (gcode.encode ())
 
             ret = self.read ()
+            #print ("command", gcode)
+            #print ("reply:", ret)
             return ret + "\r\n"
         except Exception as e:
             return str(e) + "\r\n"
