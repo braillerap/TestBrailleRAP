@@ -333,7 +333,7 @@ class App extends Component {
         if (this.serialdataref) {
           // scroll to end
           this.serialdataref.current.scrollTop = this.serialdataref.current.scrollHeight + 1;
-          console.log ("scroll to end");
+          
         }
     });
     
