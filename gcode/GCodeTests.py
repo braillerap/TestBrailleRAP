@@ -2,13 +2,14 @@
 
 from . import GCTestHelloWorld
 from . import GCTestElephant
-
+from . import GCTestValidation
 
 class GCodeTests:
     def __init__(self):
         self.tests = [
-            {"name":"hello world",  "gcode":GCTestHelloWorld.HELLOWORLD_GCODE},
-            {"name":"elephant",     "gcode":GCTestElephant.ELEPHANT_GCODE}
+            {"name":"hello world",      "gcode":GCTestHelloWorld.HELLOWORLD_GCODE},
+            {"name":"elephant",         "gcode":GCTestElephant.ELEPHANT_GCODE},
+            {"name":"validation test",  "gcode":GCTestValidation.TEST_VALIDATION_GCODE}
         ]
 
     def getList (self):
