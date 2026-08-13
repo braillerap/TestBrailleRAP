@@ -338,14 +338,14 @@ class App extends Component {
     console.log("gcode", this.state.gcodecmd);
     let ret = await this.context.GetBackend().gcode_send_cmd(this.state.gcodecmd + "\r\n");
     console.log(ret);
-    this.setState({ serialdata: this.state.serialdata + ">" + this.state.gcodecmd + "\r\n" +ret }, () => {
-        if (this.serialdataref) {
-          // scroll to end
-          this.serialdataref.current.scrollTop = this.serialdataref.current.scrollHeight + 1;
-          
-        }
+    this.setState({ serialdata: this.state.serialdata + ">" + this.state.gcodecmd + "\r\n" + ret }, () => {
+      if (this.serialdataref) {
+        // scroll to end
+        this.serialdataref.current.scrollTop = this.serialdataref.current.scrollHeight + 1;
+
+      }
     });
-    
+
   }
 
   /*!
@@ -504,56 +504,56 @@ class App extends Component {
         </div>
 
         <hr className='hseparator' />
-        
+
         <div className='lg:flex lg:justify-items-start'>
           <div>
-          <label className='labelelm'
-            htmlFor='selectspeed'>
-            {this.context.GetLocaleString("param.speed")}:
-          </label>
-          <select className='selectnum'
-            onChange={this.handleChangeSpeed}
-            value={this.state.speed}
-            id="selectspeed"
-            name="selectspeed"
-            disabled={!this.state.connected}>
-            {
-              this.speed_option.map((speed) => {
-                if (speed === this.state.speed)
-                  return (<option aria-selected={true} value={speed}>{speed} </option>);
-                else
-                  return (<option aria-selected={false} value={speed}>{speed} </option>);
-              })
-            }
+            <label className='labelelm'
+              htmlFor='selectspeed'>
+              {this.context.GetLocaleString("param.speed")}:
+            </label>
+            <select className='selectnum'
+              onChange={this.handleChangeSpeed}
+              value={this.state.speed}
+              id="selectspeed"
+              name="selectspeed"
+              disabled={!this.state.connected}>
+              {
+                this.speed_option.map((speed) => {
+                  if (speed === this.state.speed)
+                    return (<option aria-selected={true} value={speed}>{speed} </option>);
+                  else
+                    return (<option aria-selected={false} value={speed}>{speed} </option>);
+                })
+              }
 
-          </select>
-            </div>
-            <div>
-          <label className='labelelm'
-            htmlFor='selectaccel'>
-            {this.context.GetLocaleString("param.accel")}:
-          </label>
+            </select>
+          </div>
+          <div>
+            <label className='labelelm'
+              htmlFor='selectaccel'>
+              {this.context.GetLocaleString("param.accel")}:
+            </label>
 
-          <select className='selectnum'
-            onChange={this.handleChangeAcc}
-            value={this.state.accel}
-            id="selectaccel"
-            name="selectaccel"
-            disabled={!this.state.connected}>
-            {
-              this.accel_option.map((accel) => {
-                if (accel === this.state.accel)
-                  return (<option aria-selected={true} value={accel}>{accel} </option>);
-                else
-                  return (<option aria-selected={false} value={accel}>{accel} </option>);
-              })
-            }
+            <select className='selectnum'
+              onChange={this.handleChangeAcc}
+              value={this.state.accel}
+              id="selectaccel"
+              name="selectaccel"
+              disabled={!this.state.connected}>
+              {
+                this.accel_option.map((accel) => {
+                  if (accel === this.state.accel)
+                    return (<option aria-selected={true} value={accel}>{accel} </option>);
+                  else
+                    return (<option aria-selected={false} value={accel}>{accel} </option>);
+                })
+              }
 
 
-          </select>
+            </select>
 
-            </div>
-        
+          </div>
+
 
           <div>
             <label className='labelelm'
