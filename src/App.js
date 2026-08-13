@@ -117,6 +117,7 @@ class App extends Component {
     this.handleMove = this.handleMove.bind(this);
 
     this.handleOpenCom = this.handleOpenCom.bind(this);
+    this.handleCloseCom = this.handleCloseCom.bind(this);
     this.handleQuit = this.handleQuit.bind(this);
     this.handleRefreshPort = this.handleRefreshPort.bind(this);
     this.handleRunTest = this.handleRunTest.bind(this);
@@ -185,6 +186,14 @@ class App extends Component {
     this.context.SetOption(option);
   }
 
+  /*!
+     *\brief Close button callback. Close the previously opened serial communication port.
+     *
+     */
+  handleCloseCom() {
+    this.context.GetBackend().gcode_close();
+    this.setState({ connected: false });
+  }
   setConnectedState() {
     this.setState({ connected: true });
   }
@@ -427,7 +436,7 @@ class App extends Component {
         <div className='flex'>
           <button className="btn btn-blue"
             disabled={!this.state.connected}
-            onClick={this.setDisconnectedState}>
+            onClick={this.handleCloseCom}>
             {this.context.GetLocaleString("param.disconnect")}
 
           </button>

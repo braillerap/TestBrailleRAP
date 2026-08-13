@@ -11,11 +11,21 @@ class GCodeDevice :
     def openCom (self, port):
         try:
             self.port = port
-            self.hwport = serial.Serial(self.port, 250000, timeout=2, write_timeout=2) 
+            self.hwport = serial.Serial(self.port, 250000, timeout=4, write_timeout=2) 
         except:
             return -1
         
         return 0
+
+    def closeCom (self):
+            try:
+                self.hwport.close ()
+                self.hwport = self.port = None
+            except:
+                return -1
+            
+            return 0
+    
     def read (self):
         # Wait for response with carriage return
         tbegin = time.time()

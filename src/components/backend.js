@@ -47,6 +47,16 @@ class BackendPyWebview {
         return list;    
     }
 
+
+     /*!
+     *\brief Close the serial communication port
+     *
+     */
+    async gcode_close ()
+    {
+        return await window.pywebview.api.closeCom ();
+    }
+
     /*!
      *\brief Open a serial communication port
      *
@@ -230,6 +240,17 @@ class Backend {
             console.log ("return from backend confirm_dialog: ", ret)
             return ret;
         }
+    }
+
+    /*!
+     *\brief Close the serial communication port
+     *
+     */
+    async gcode_close ()
+    {
+        if (this.backendready)
+            return await this.backend.gcode_close ();
+        return -1;
     }
 
     /*!

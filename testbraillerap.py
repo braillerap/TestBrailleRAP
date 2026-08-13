@@ -85,6 +85,12 @@ class Api:
         ret = self.gcode.openCom (port)
         print (ret)
         return (ret);
+
+    def closeCom (self):
+        ret = self.gcode.closeCom ()
+        print (ret)
+        return ret
+    
     def MoveRel (self, x, y):
         ret = self.gcode.MoveRel(x,y)
         return (ret)
