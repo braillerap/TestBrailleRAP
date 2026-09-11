@@ -42,7 +42,7 @@ import Russian from '../locales/ru.json';
 const locales = {
     "en":       {lang:"en", dir:"ltr", desc:"en - English",             reverse:false, data:English},
     "fr":       {lang:"fr", dir:'ltr', desc:'fr - Français',            reverse:false, data:French},
-     "ru":      {lang:"ru", dir:'ltr', desc:'ru - Pусский',            reverse:false, data:Russian},
+    "ru":       {lang:"ru", dir:'ltr', desc:'ru - Pусский',             reverse:false, data:Russian},
 }; 
 
 export default locales;
