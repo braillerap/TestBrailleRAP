@@ -34,3 +34,4 @@ sign.txt
 nsis/TestBrailleRAP_Windows_Setup.exe
 nsis/_internal.zip
 nsis/TestBrailleRAP.exe
+.vscode/
