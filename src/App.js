@@ -328,10 +328,23 @@ class App extends Component {
     }
   }
 
+  /*!
+     *\brief run.test Button callback. Set speed and accel, load the selected test file and send it to serial port.
+     *
+     */
   async handleRunTest() {
     console.log("gcode", this.state.gcodetest);
-    let test = await this.context.GetBackend().get_gcode_test(this.state.gcodetest);
-    await this.context.GetBackend().gcode_print(test);
+    let backend = this.context.GetBackend();
+    
+    // set speed and accel for the test
+    await backend.gcode_set_speed(this.state.speed);
+    await backend.gcode_set_accel(this.state.accel);
+    
+    // get the test file
+    let test = await backend.get_gcode_test(this.state.gcodetest);
+    
+    // send the test file to BrailleRAP
+    await backend.gcode_print(test);
   }
 
   async handleSendGCode() {
