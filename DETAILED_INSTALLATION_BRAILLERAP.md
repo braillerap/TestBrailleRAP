@@ -13,7 +13,7 @@ Building TestBrailleRAP from its source code requires a basic understanding of c
 **Prerequisites:**
 
 * **Python 3.10 or later:** Ensure it's added to your system's PATH during installation.
-* **Node.js 20.12 or later:** Install from the official Node.js website.
+* **Node.js 24.x or later:** Install from the official Node.js website.
 * **Git:** Install Git to clone the repository.
 
 **Step-by-Step Instructions:**
@@ -72,7 +72,7 @@ Building TestBrailleRAP from its source code requires a basic understanding of c
 **Prerequisites:**
 
 * **Python 3 and Python 3 `venv` module.**
-* **Node.js 20.x and npm.**
+* **Node.js 24.x and npm.**
 * **GCC and general build tools:** `git-extras`, `lintian`.
 * **Additional Python development headers and GTK/WebKit dependencies:** `python3-pyqt6`, `python3-tk`, `libqt6webchannel6`, `libqt6webview6`.
 
@@ -89,7 +89,7 @@ Building TestBrailleRAP from its source code requires a basic understanding of c
    sudo apt install -y git git-extras lintian python3-venv python3-pyqt6 python3-tk libqt6webchannel6 libqt6webview6
    ```
 
-3. **Install Node.js 20.x:**
+3. **Install Node.js 24.x:**
    
    ```bash
    sudo apt install nodejs npm
@@ -175,7 +175,7 @@ Building TestBrailleRAP from its source code requires a basic understanding of c
 **Prerequisites:**
 
 * **Python 3 and Python 3 `venv` module.**
-* **Node.js 20.x and npm.**
+* **Node.js 24.x and npm.**
 * **GCC and general build tools:** `git-extras`, `lintian`.
 * **Additional Python development headers and GTK/WebKit dependencies:** `python3-pyqt6`, `python3-tk`, `libqt6webchannel6`, `libqt6webview6`.
 
@@ -192,7 +192,7 @@ Building TestBrailleRAP from its source code requires a basic understanding of c
    sudo apt install -y git git-extras lintian python3-venv python3-pyqt6 python3-tk libqt6webchannel6 libqt6webview6
    ```
 
-3. **Install Node.js 20.x:**
+3. **Install Node.js 24.x:**
    
    ```bash
    sudo apt install nodejs npm
