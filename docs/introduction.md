@@ -2,19 +2,17 @@
 
 ## Présentation
 
-**TestBrailleRAP** is a tool to help validate or diagnose [**BrailleRAP**](https://www.braillerap.org) devices. Par documents tactiles on entend des documents qui contiennent des graphiques mis en relief, avec des annotations en Braille. Pour rappel [**BrailleRAP**](https://www.braillerap.org) est une embosseuse DIY (Do It Yourself) open source permettant de réaliser des documents en Braille mais également de mettre des graphiques en relief.
+**TestBrailleRAP** is a tool to help validate or diagnose [**BrailleRAP**](https://www.braillerap.org) devices. **TestBrailleRAP** provide several feature to test limit switch, homing, and motors. It also provide some test scenarios for Braille quality validation.
 
-## Financement
+## Funding
 
-Ce projet est financé grace à [NGI0 Entrust](https://nlnet.nl/entrust), un fond créé par [NLnet](https://nlnet.nl) avec le support du programme  [Next Generation Internet](https://ngi.eu) de la Commision Européene. Plus d'informations ici [NLnet project page](https://nlnet.nl/project/BrailleRAP).
+This project is funded through [NGI0 Entrust](https://nlnet.nl/entrust), a fund established by [NLnet](https://nlnet.nl) with financial support from the European Commission's [Next Generation Internet](https://ngi.eu) program. Learn more at the [NLnet project page](https://nlnet.nl/project/BrailleRAP).
 
-[ 
-    <img src="./IMG/nlnetbanner.png" alt="Le logo du programme NGI0" width="25%">
-](https://nlnet.nl) 
-[
-    <img src="./IMG/NGI0_tag.png" alt="Le logo du programme NGI0" width="25%">
-](https://nlnet.nl) 
+[<img src="https://nlnet.nl/logo/banner.png" alt="NLnet foundation logo" width="20%" />](https://nlnet.nl)
+[<img src="https://nlnet.nl/image/logos/NGI0_tag.svg" alt="NGI Zero Logo" width="20%" />](https://nlnet.nl/entrust)
 
+# Building from source for Windows, Linux
+Detailed build instructions are available in [DETAILED_INSTALLATION_BRAILLERAP.md](DETAILED_INSTALLATION_BRAILLERAP.md)
 
 
 
