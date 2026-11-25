@@ -347,6 +347,10 @@ class App extends Component {
     await backend.gcode_print(test);
   }
 
+  /*!
+     *\brief param.send-gcode Button callback. Send the string in edit box to the serial port. Update command history
+     *
+     */
   async handleSendGCode() {
     console.log("gcode", this.state.gcodecmd);
     let ret = await this.context.GetBackend().gcode_send_cmd(this.state.gcodecmd + "\r\n");
